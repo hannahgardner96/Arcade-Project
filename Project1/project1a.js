@@ -1,6 +1,15 @@
 "use strict";
 // SIMON GAME
 // Create a light up simon says game that displays 4 buttons that light up and play a sound. Computer plays random sequence starting w length of 1 and growing with each round. User replays sequence by clicking buttons in correct order. If correct, computer goes onto next round, increasing length of sequence by one. Score determined by length of sequence correctly mimicked. 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 // ===== VARIABLES ===== //
 // ***** variables pulled from html ***** //
 // import swal from "sweetalert"
@@ -36,21 +45,28 @@ let clicks = 0;
 let score = 0;
 scoreH4.innerText = `${score}`;
 // ===== FUNCTIONS ===== //
-//  *** this function is used for both simon's demonstration and the player's move *** //
-const flashLights = (buttons /*, index: number = 0*/, func) => {
-    // if(index === buttons.length) {
-    //     return
-    // }
-    buttons.forEach((button) => {
-        setTimeout(() => {
-            document.getElementById(button.id).style.backgroundColor = button.lightOn;
-            setTimeout(() => {
-                document.getElementById(button.id).style.backgroundColor = button.lightOff;
-                setTimeout(func, 0); // this will call the function entered as a parameter. Consulted someone w experience. It is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
-            }, 500);
-        }, 500);
-    });
+//  *** these function is used for both simon's demonstration and the player's move *** //
+const getSimonElement = (button) => {
+    return document.getElementById(button.id); // "!" to say that this is a non-null assertion
 };
+// const timeout = (f, milliseconds) => new Promise(resolve => {
+// }) // if I were creating a promise without ts, I would structure it like this. Below is the structure with ts.
+const timeout = (func, milliseconds) => new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(func());
+    }, milliseconds);
+}); // this function is a promise that takes a function and a number of milliseconds as a parameter, waits at least the amount of time in the seconds, and then executes the function and returns a promise (in the case of flashLights the return will be changing and unchanging the style which is technically a void output bc no value is returning, just manipulating HTML elements). This is effectively a timeout but it is a promise instead of a callback so you can use async/await to force the different promises to wait for each other.
+const flashLights = (buttons) => __awaiter(void 0, void 0, void 0, function* () {
+    // buttons.forEach((button) => {
+    for (const button of buttons) { // someone with experience suggested I use a for of loop rather than a for each loop to execute async functions so that the loop iterated over each individual element (staying in the scope of flashLights()) rather than applying a function to each element at the same time (creating a separate scope from flashLights()). I used https://medium.com/@nataliecardot/foreach-vs-for-of-vs-for-in-loops-472146fc1a1f as a resource to understand more. 
+        yield timeout(() => {
+            getSimonElement(button).style.backgroundColor = button.lightOn;
+        }, 500);
+        yield timeout(() => {
+            getSimonElement(button).style.backgroundColor = button.lightOff;
+        }, 500);
+    }
+});
 // *** these functions compose Simon's demonstration *** //
 const setGoalSequence = () => {
     const randomIndex = Math.floor(Math.random() * simonButtons.length);
@@ -111,7 +127,7 @@ startButton.onclick = () => {
 };
 // Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
 simonButtons.forEach(button => {
-    document.getElementById(button.id).onclick = (e) => {
+    getSimonElement(button).onclick = (e) => {
         playerCopies(e);
     };
 });

@@ -101,20 +101,32 @@ let score: number = 0
 
 // ===== FUNCTIONS ===== //
 
-//  *** this function is used for both simon's demonstration and the player's move *** //
-const flashLights = (buttons: SimonButton[]/*, index: number = 0*/, func: Function) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
-    // if(index === buttons.length) {
-    //     return
-    // }
-    buttons.forEach((button) => {
-        setTimeout(() => { // I began looking through this resource https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous and consulted someone with experience coding to frmat the asynchronus timeouts
-            document.getElementById(button.id).style.backgroundColor = button.lightOn 
-            setTimeout(() => {
-                document.getElementById(button.id).style.backgroundColor = button.lightOff
-                setTimeout(func, 0) // this will call the function entered as a parameter. Consulted someone w experience. It is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
-            }, 500)
+//  *** these function is used for both simon's demonstration and the player's move *** //
+const getSimonElement = (button: SimonButton) => { // suggestion from someone w experience to make dryer 
+    return document.getElementById(button.id)! // "!" to say that this is a non-null assertion
+}
+
+// const timeout = (f, milliseconds) => new Promise(resolve => {
+
+// }) // if I were creating a promise without ts, I would structure it like this. Below is the structure with ts.
+
+const timeout = <output>(func: () => output, milliseconds: number) => new Promise<output>((resolve) => {
+    setTimeout(() => {
+        resolve(func())
+    }, milliseconds)
+}) // this function is a promise that takes a function and a number of milliseconds as a parameter, waits at least the amount of time in the seconds, and then executes the function and returns a promise (in the case of flashLights the return will be changing and unchanging the style which is technically a void output bc no value is returning, just manipulating HTML elements). This is effectively a timeout but it is a promise instead of a callback so you can use async/await to force the different promises to wait for each other.
+
+const flashLights = async (buttons: SimonButton[]) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
+    // buttons.forEach((button) => {
+    for (const button of buttons) { // someone with experience suggested I use a for of loop rather than a for each loop to execute async functions so that the loop iterated over each individual element (staying in the scope of flashLights()) rather than applying a function to each element at the same time (creating a separate scope from flashLights()). I used https://medium.com/@nataliecardot/foreach-vs-for-of-vs-for-in-loops-472146fc1a1f as a resource to understand more. 
+        await timeout(() => { // referenced https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await for theory and formatting also asked someone with experience about formatting
+            getSimonElement(button).style.backgroundColor = button.lightOn
         }, 500)
-    })
+        await timeout(() => {
+            getSimonElement(button).style.backgroundColor = button.lightOff
+        }, 500)
+    }
+
 }
 
 // *** these functions compose Simon's demonstration *** //
@@ -182,7 +194,7 @@ startButton.onclick = () => {
 
 // Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
 simonButtons.forEach(button => {
-    document.getElementById(button.id).onclick = (e) => {
+    getSimonElement(button).onclick = (e) => {
         playerCopies(e)
     }
 })
