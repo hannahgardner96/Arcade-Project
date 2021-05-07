@@ -43,34 +43,65 @@
         // DONE alert to click button to move onto next round
         // next round = click of initialize demo button (7.)
 
-//  *** CURRENT ISSUE flashLight flashes all the indices of an array at the same time. Look into recursive timeouts.
+//  *** CURRENT ISSUE flashLight flashes all the indices of an array at the same time. AND if the second index is the same color as the first, it just flashes once. Look into recursive timeouts.
 // DONE *** CURRENT ISSUE not triggering else block in playerCopies()
 // *** CURRENT ISSUE after a player clicks a button, it alerts them immediately whether they were correct/incorrect rather than waiting until after their light flashes.
+// *** CURRENT ISSUE multiple alerts popping up as start button clicked multiple times
 // *** CURRENT ISSUE not able to run compareSequences() for second round
 // ^^ both async js issues
 
-// interface SimonButton {
-//     id: string;
-//     colorOff: string;
-//     colorOn: string;
-// } // idea for interface from Nate. Create interface so that I don't need a giant conditional block and can adjust it no matter how many buttons/divs there are.
+// ===== INTERFACES ===== //
+interface SimonButton {
+    element: HTMLElement,
+    id: string,
+    lightOff: string,
+    lightOn: string,
+} // idea for interface from someone w experience. Create interface so that I don't need a giant conditional block and can adjust it no matter how many buttons/divs there are. Referenced https://www.typescriptlang.org/docs/handbook/interfaces.html to create
 
 // ===== VARIABLES ===== //
 // ***** variables pulled from html ***** //
 // import swal from "sweetalert"
-const greenButton = document.getElementById("green")! // "!" tells TS that I am certain that this element exists. Typically TS will return HTMLElement or null but by putting this here I am assuring it that it is an HTML element. "non-null assertion"
-const redButton = document.getElementById("red")!
-const yellowButton = document.getElementById("yellow")!
-const blueButton = document.getElementById("blue")!
+const greenButton: SimonButton = {
+    element: document.getElementById("green"),
+    id: `${document.getElementById("green").id}`,
+    lightOff: "#3b7a62",
+    lightOn: "#00ff9d"
+}
+
+const redButton: SimonButton = {
+    element: document.getElementById("red"),
+    id: `${document.getElementById("red").id}`,
+    lightOff: "#6d3232",
+    lightOn: "#fd0000"
+}
+
+const yellowButton: SimonButton = {
+    element: document.getElementById("yellow"),
+    id: `${document.getElementById("yellow").id}`,
+    lightOff: "#b8b849",
+    lightOn: "#ffff00"
+}
+
+const blueButton: SimonButton = {
+    element: document.getElementById("blue"),
+    id: `${document.getElementById("blue").id}`,
+    lightOff: "#327d96",
+    lightOn: "#00bfff"
+}
+
+// const greenButton = document.getElementById("green")! // "!" tells TS that I am certain that this element exists. Typically TS will return HTMLElement or null but by putting this here I am assuring it that it is an HTML element. "non-null assertion"
+// const redButton = document.getElementById("red")!
+// const yellowButton = document.getElementById("yellow")!
+// const blueButton = document.getElementById("blue")!
 const startButton = document.querySelector("button")!
 const simonResultsH4 = document.getElementById("simon-results")!
 const playerResultsH4 = document.getElementById("player-results")!
 const scoreH4 = document.getElementById("score-value")!
 
 // ***** variables defined in TS ***** //
-const simonButtons: HTMLElement[] = [greenButton, redButton, yellowButton, blueButton]
-let goalSequence: HTMLElement[] = [] // used https://stackoverflow.com/questions/52423842/what-is-not-assignable-to-parameter-of-type-never-error-in-typescript to address type error in setGoalSequence function coming from the output's (this array's) type not being defined
-let playerSequence: HTMLElement[] = []
+const simonButtons: SimonButton[] = [greenButton, redButton, yellowButton, blueButton]
+let goalSequence: SimonButton[] = [] // used https://stackoverflow.com/questions/52423842/what-is-not-assignable-to-parameter-of-type-never-error-in-typescript to address type error in setGoalSequence function coming from the output's (this array's) type not being defined
+let playerSequence: SimonButton[] = []
 let clicks: number = 0
 let score: number = 0
     scoreH4.innerText = `${score}`
@@ -79,46 +110,18 @@ let score: number = 0
 // ===== FUNCTIONS ===== //
 
 //  *** this function is used for both simon's demonstration and the player's move *** //
-const flashLights = (buttons: HTMLElement[]/*, index: number = 0*/, func: Function) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
+const flashLights = (buttons: SimonButton[]/*, index: number = 0*/, func: Function) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
     // if(index === buttons.length) {
     //     return
     // }
     buttons.forEach((button) => {
-        if (button === greenButton) {
-            setTimeout(() => { // I began looking through this resource https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous and consulted someone with experience coding to frmat the asynchronus timeouts
-                button.style.backgroundColor = "#00ff9d"
-                setTimeout(() => {
-                    button.style.backgroundColor = "#3b7a62"
-                    // flashLights(buttons, index + 1)
-                    setTimeout(func, 0) // this will call the function entered as a parameter. Consulted someone w experience.
-                }, 500)
-            }, 500)
-            
-        } else if (button === redButton) {
+        setTimeout(() => { // I began looking through this resource https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous and consulted someone with experience coding to frmat the asynchronus timeouts
+            button.element.style.backgroundColor = button.lightOn 
             setTimeout(() => {
-                button.style.backgroundColor = "#fd0000"
-                setTimeout(() => {
-                    button.style.backgroundColor = "#6d3232"
-                    setTimeout(func, 0) // this function is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
-                }, 500)
+                button.element.style.backgroundColor = button.lightOff
+                setTimeout(func, 0) // this will call the function entered as a parameter. Consulted someone w experience. It is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
             }, 500)
-        } else if (button === yellowButton) {
-            setTimeout(() => {
-                button.style.backgroundColor = "#ffff00"
-                setTimeout(() => {
-                    button.style.backgroundColor = "#b8b849"
-                    setTimeout(func, 0)
-                }, 500)
-            }, 500)
-        } else if (button === blueButton) {
-            setTimeout(() => {
-                button.style.backgroundColor = "#00bfff"
-                setTimeout(() => {
-                    button.style.backgroundColor = "#327d96"
-                    setTimeout(func, 0)
-                }, 500)
-            }, 500)
-        }
+        }, 500)
     })
 }
 
@@ -186,19 +189,19 @@ startButton.onclick = () => {
 }
 
 // Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
-greenButton.onclick = (e) => {
+greenButton.element.onclick = (e) => { // after creating the SimonButton interface, i had to add ".element" because greenButton itself is not an HTMLElement but greenButton.element is
         playerCopies(e)
 }
 
-redButton.onclick = (e) => {
+redButton.element.onclick = (e) => {
         playerCopies(e)
 }
 
-yellowButton.onclick = (e) => {
+yellowButton.element.onclick = (e) => {
     playerCopies(e)
 }
 
-blueButton.onclick = (e) => {
+blueButton.element.onclick = (e) => {
     playerCopies(e)
 }
 

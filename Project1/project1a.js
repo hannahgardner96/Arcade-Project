@@ -1,61 +1,36 @@
 "use strict";
 // Create a light up simon says game that displays 4 buttons that light up and play a sound. Computer plays random sequence starting w length of 1 and growing with each round. User replays sequence by clicking buttons in correct order. If correct, computer goes onto next round, increasing length of sequence by one. Score determined by length of sequence correctly mimicked. 
-// ===== GAME FLOW ===== //
-// 1. User clicks initialize demo
-// 2. Simon demonstrates sequence of lights
-// 3. Values of sequence are stored
-// 4. User mimicks sequence of lights
-// 5. Value of sequence is stored
-// 6. Simon value is compared to player value
-// 7. If === then, proceed to next round
-// 7a. Each round, increase length of sequence by 1
-// 8. if !== then alert player to loss and display final score
-// ===== TS/JS GOALS ===== //
-//  ***** BIG FUNCTION COMPOSED OF SMALLER FUNCTIONS ***** //
-// 1. User clicks initialize demo && 2. Simon demonstrates sequence of lights && 3. Values of sequence are stored && 7a. Each round, increase length of sequence by 1
-// DONE let goalSequence[] = empty array to build sequence 
-// DONE let simonButtons = array of div ids: green, red, yellow, blue (probably save sivs to global variables as reference)
-// DONE event listener on initialize simon demo to trigger demo (1.)
-// DONE push (7a.) a random index from simonButtons into goalSequence (2.)
-// DONE use goalSequence in a loop/other function to change and return the style of the divs as if they are lighting up
-// DONE alert player that it is their turn
-// until player makes move, they cannot click start again
-//  ***** BIG FUNCTION COMPOSED OF SMALLER FUNCTIONS ***** //
-//  4. User mimicks sequence of lights && 5. Value of sequence is stored && // 7. If === then, proceed to next round && 8. if !== then alert player to loss and display final score
-// let playerSequence[] = empty array to build player sequence
-// let playerClicks = 0 as number of clicks in turn
-// let playerScore = 0
-// event listeners on buttons (forEach loop for each button ID?) (4.)
-// Onclick start conditional that does different things depending on length.
-// onclick, if playerClicks < goalSequence.length
-// DONE onclick, increase playerClicks by 1 (5.)
-// DONE onclick style is changed and returned as if button is lighting up
-// DONE onclick variable is added to playerSequence (5.)
-// if playerSequence[playerClicks-1] === goalSequence[playerClicks-1], play happy sound (7. (ish))
-// 1/2 DONE (need sound not alert) if playerSequence[playerClicks-1] !== goalSequence[playerClicks-1], play angry sound (7. (ish))
-// trigger alert that player has lost and display score
-// onclick, if playerClicks === goalSequence.length
-// DONE increase score
-// DONE end turn (5.)
-// DONE alert to click button to move onto next round
-// next round = click of initialize demo button (7.)
-//  *** CURRENT ISSUE flashLight flashes all the indices of an array at the same time. Look into recursive timeouts.
-// DONE *** CURRENT ISSUE not triggering else block in playerCopies()
-// *** CURRENT ISSUE after a player clicks a button, it alerts them immediately whether they were correct/incorrect rather than waiting until after their light flashes.
-// *** CURRENT ISSUE not able to run compareSequences() for second round
-// ^^ both async js issues
-// interface SimonButton {
-//     id: string;
-//     colorOff: string;
-//     colorOn: string;
-// } // idea for interface from Nate. Create interface so that I don't need a giant conditional block and can adjust it no matter how many buttons/divs there are.
 // ===== VARIABLES ===== //
 // ***** variables pulled from html ***** //
 // import swal from "sweetalert"
-const greenButton = document.getElementById("green"); // "!" tells TS that I am certain that this element exists. Typically TS will return HTMLElement or null but by putting this here I am assuring it that it is an HTML element. "non-null assertion"
-const redButton = document.getElementById("red");
-const yellowButton = document.getElementById("yellow");
-const blueButton = document.getElementById("blue");
+const greenButton = {
+    element: document.getElementById("green"),
+    id: `${document.getElementById("green").id}`,
+    lightOff: "#3b7a62",
+    lightOn: "#00ff9d"
+};
+const redButton = {
+    element: document.getElementById("red"),
+    id: `${document.getElementById("red").id}`,
+    lightOff: "#6d3232",
+    lightOn: "#fd0000"
+};
+const yellowButton = {
+    element: document.getElementById("yellow"),
+    id: `${document.getElementById("yellow").id}`,
+    lightOff: "#b8b849",
+    lightOn: "#ffff00"
+};
+const blueButton = {
+    element: document.getElementById("blue"),
+    id: `${document.getElementById("blue").id}`,
+    lightOff: "#327d96",
+    lightOn: "#00bfff"
+};
+// const greenButton = document.getElementById("green")! // "!" tells TS that I am certain that this element exists. Typically TS will return HTMLElement or null but by putting this here I am assuring it that it is an HTML element. "non-null assertion"
+// const redButton = document.getElementById("red")!
+// const yellowButton = document.getElementById("yellow")!
+// const blueButton = document.getElementById("blue")!
 const startButton = document.querySelector("button");
 const simonResultsH4 = document.getElementById("simon-results");
 const playerResultsH4 = document.getElementById("player-results");
@@ -74,43 +49,13 @@ const flashLights = (buttons /*, index: number = 0*/, func) => {
     //     return
     // }
     buttons.forEach((button) => {
-        if (button === greenButton) {
+        setTimeout(() => {
+            button.element.style.backgroundColor = button.lightOn;
             setTimeout(() => {
-                button.style.backgroundColor = "#00ff9d";
-                setTimeout(() => {
-                    button.style.backgroundColor = "#3b7a62";
-                    // flashLights(buttons, index + 1)
-                    setTimeout(func, 0); // this will call the function entered as a parameter. Consulted someone w experience.
-                }, 500);
+                button.element.style.backgroundColor = button.lightOff;
+                setTimeout(func, 0); // this will call the function entered as a parameter. Consulted someone w experience. It is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
             }, 500);
-        }
-        else if (button === redButton) {
-            setTimeout(() => {
-                button.style.backgroundColor = "#fd0000";
-                setTimeout(() => {
-                    button.style.backgroundColor = "#6d3232";
-                    setTimeout(func, 0); // this function is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
-                }, 500);
-            }, 500);
-        }
-        else if (button === yellowButton) {
-            setTimeout(() => {
-                button.style.backgroundColor = "#ffff00";
-                setTimeout(() => {
-                    button.style.backgroundColor = "#b8b849";
-                    setTimeout(func, 0);
-                }, 500);
-            }, 500);
-        }
-        else if (button === blueButton) {
-            setTimeout(() => {
-                button.style.backgroundColor = "#00bfff";
-                setTimeout(() => {
-                    button.style.backgroundColor = "#327d96";
-                    setTimeout(func, 0);
-                }, 500);
-            }, 500);
-        }
+        }, 500);
     });
 };
 // *** these functions compose Simon's demonstration *** //
@@ -172,16 +117,16 @@ startButton.onclick = () => {
     simonSays();
 };
 // Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
-greenButton.onclick = (e) => {
+greenButton.element.onclick = (e) => {
     playerCopies(e);
 };
-redButton.onclick = (e) => {
+redButton.element.onclick = (e) => {
     playerCopies(e);
 };
-yellowButton.onclick = (e) => {
+yellowButton.element.onclick = (e) => {
     playerCopies(e);
 };
-blueButton.onclick = (e) => {
+blueButton.element.onclick = (e) => {
     playerCopies(e);
 };
 // swal("hello world")
