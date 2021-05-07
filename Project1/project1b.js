@@ -1,4 +1,5 @@
 "use strict";
+// SNOWMAN GAME
 // Create a snowman game that displays a secret word as a list of hidden letters. Display an alphabet of letters that the player can reference while trying to guess the word. After a letter is used, disable that letter from alphabet. When a guess matches >= 1 letter, reveal those letters in list. Store incorrect guesses and end if they reach 6. When player reveals all hidden letters, they win.
 // ===== GAME FLOW ===== //
 // 1. User clicks start game, a secret word is chosen, and they are prompted to begin guessing.

@@ -1,36 +1,29 @@
 "use strict";
+// SIMON GAME
 // Create a light up simon says game that displays 4 buttons that light up and play a sound. Computer plays random sequence starting w length of 1 and growing with each round. User replays sequence by clicking buttons in correct order. If correct, computer goes onto next round, increasing length of sequence by one. Score determined by length of sequence correctly mimicked. 
 // ===== VARIABLES ===== //
 // ***** variables pulled from html ***** //
 // import swal from "sweetalert"
 const greenButton = {
-    element: document.getElementById("green"),
-    id: `${document.getElementById("green").id}`,
+    id: "green",
     lightOff: "#3b7a62",
     lightOn: "#00ff9d"
 };
 const redButton = {
-    element: document.getElementById("red"),
-    id: `${document.getElementById("red").id}`,
+    id: "red",
     lightOff: "#6d3232",
     lightOn: "#fd0000"
 };
 const yellowButton = {
-    element: document.getElementById("yellow"),
-    id: `${document.getElementById("yellow").id}`,
+    id: "yellow",
     lightOff: "#b8b849",
     lightOn: "#ffff00"
 };
 const blueButton = {
-    element: document.getElementById("blue"),
-    id: `${document.getElementById("blue").id}`,
+    id: "blue",
     lightOff: "#327d96",
     lightOn: "#00bfff"
 };
-// const greenButton = document.getElementById("green")! // "!" tells TS that I am certain that this element exists. Typically TS will return HTMLElement or null but by putting this here I am assuring it that it is an HTML element. "non-null assertion"
-// const redButton = document.getElementById("red")!
-// const yellowButton = document.getElementById("yellow")!
-// const blueButton = document.getElementById("blue")!
 const startButton = document.querySelector("button");
 const simonResultsH4 = document.getElementById("simon-results");
 const playerResultsH4 = document.getElementById("player-results");
@@ -50,9 +43,9 @@ const flashLights = (buttons /*, index: number = 0*/, func) => {
     // }
     buttons.forEach((button) => {
         setTimeout(() => {
-            button.element.style.backgroundColor = button.lightOn;
+            document.getElementById(button.id).style.backgroundColor = button.lightOn;
             setTimeout(() => {
-                button.element.style.backgroundColor = button.lightOff;
+                document.getElementById(button.id).style.backgroundColor = button.lightOff;
                 setTimeout(func, 0); // this will call the function entered as a parameter. Consulted someone w experience. It is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
             }, 500);
         }, 500);
@@ -117,16 +110,9 @@ startButton.onclick = () => {
     simonSays();
 };
 // Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
-greenButton.element.onclick = (e) => {
-    playerCopies(e);
-};
-redButton.element.onclick = (e) => {
-    playerCopies(e);
-};
-yellowButton.element.onclick = (e) => {
-    playerCopies(e);
-};
-blueButton.element.onclick = (e) => {
-    playerCopies(e);
-};
+simonButtons.forEach(button => {
+    document.getElementById(button.id).onclick = (e) => {
+        playerCopies(e);
+    };
+});
 // swal("hello world")
