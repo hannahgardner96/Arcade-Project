@@ -44,18 +44,28 @@
         // next round = click of initialize demo button (7.)
 
 //  *** CURRENT ISSUE flashLight flashes all the indices of an array at the same time. Look into recursive timeouts.
+// DONE *** CURRENT ISSUE not triggering else block in playerCopies()
+// *** CURRENT ISSUE after a player clicks a button, it alerts them immediately whether they were correct/incorrect rather than waiting until after their light flashes.
+// *** CURRENT ISSUE not able to run compareSequences() for second round
+// ^^ both async js issues
+
+// interface SimonButton {
+//     id: string;
+//     colorOff: string;
+//     colorOn: string;
+// } // idea for interface from Nate. Create interface so that I don't need a giant conditional block and can adjust it no matter how many buttons/divs there are.
 
 // ===== VARIABLES ===== //
 // ***** variables pulled from html ***** //
 // import swal from "sweetalert"
-const greenButton = document.getElementById("green")
-const redButton = document.getElementById("red")
-const yellowButton = document.getElementById("yellow")
-const blueButton = document.getElementById("blue")
-const startButton = document.querySelector("button")
-const simonResultsH4 = document.getElementById("simon-results")
-const playerResultsH4 = document.getElementById("player-results")
-const scoreH4 = document.getElementById("score-value")
+const greenButton = document.getElementById("green")! // "!" tells TS that I am certain that this element exists. Typically TS will return HTMLElement or null but by putting this here I am assuring it that it is an HTML element. "non-null assertion"
+const redButton = document.getElementById("red")!
+const yellowButton = document.getElementById("yellow")!
+const blueButton = document.getElementById("blue")!
+const startButton = document.querySelector("button")!
+const simonResultsH4 = document.getElementById("simon-results")!
+const playerResultsH4 = document.getElementById("player-results")!
+const scoreH4 = document.getElementById("score-value")!
 
 // ***** variables defined in TS ***** //
 const simonButtons: HTMLElement[] = [greenButton, redButton, yellowButton, blueButton]
@@ -69,13 +79,18 @@ let score: number = 0
 // ===== FUNCTIONS ===== //
 
 //  *** this function is used for both simon's demonstration and the player's move *** //
-const flashLights = (buttons: HTMLElement[]) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
+const flashLights = (buttons: HTMLElement[]/*, index: number = 0*/, func: Function) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
+    // if(index === buttons.length) {
+    //     return
+    // }
     buttons.forEach((button) => {
         if (button === greenButton) {
             setTimeout(() => { // I began looking through this resource https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous and consulted someone with experience coding to frmat the asynchronus timeouts
                 button.style.backgroundColor = "#00ff9d"
                 setTimeout(() => {
                     button.style.backgroundColor = "#3b7a62"
+                    // flashLights(buttons, index + 1)
+                    setTimeout(func, 0) // this will call the function entered as a parameter. Consulted someone w experience.
                 }, 500)
             }, 500)
             
@@ -84,6 +99,7 @@ const flashLights = (buttons: HTMLElement[]) => { // this function takes an arra
                 button.style.backgroundColor = "#fd0000"
                 setTimeout(() => {
                     button.style.backgroundColor = "#6d3232"
+                    setTimeout(func, 0) // this function is an alert and alerts pop up immediately regardless of timeouts set. By setting this function's calling to a timeout of 0, it adds it to the cue and forces it to be called after the background change is timed out.
                 }, 500)
             }, 500)
         } else if (button === yellowButton) {
@@ -91,6 +107,7 @@ const flashLights = (buttons: HTMLElement[]) => { // this function takes an arra
                 button.style.backgroundColor = "#ffff00"
                 setTimeout(() => {
                     button.style.backgroundColor = "#b8b849"
+                    setTimeout(func, 0)
                 }, 500)
             }, 500)
         } else if (button === blueButton) {
@@ -98,6 +115,7 @@ const flashLights = (buttons: HTMLElement[]) => { // this function takes an arra
                 button.style.backgroundColor = "#00bfff"
                 setTimeout(() => {
                     button.style.backgroundColor = "#327d96"
+                    setTimeout(func, 0)
                 }, 500)
             }, 500)
         }
@@ -113,8 +131,7 @@ const setGoalSequence = () => { // this function pushes an element from simonBut
 
 const simonSays = () => {
     const sequenceForRound = setGoalSequence() // Simon demonstrates the sequence of lights for the player to copy
-    flashLights(sequenceForRound) // oarameter of sequence taken and used to change background of divs
-    setTimeout(() => {alert("Your turn! Simon says, 'Click the buttons exactly as I did!'")}, 1500)
+    flashLights(sequenceForRound,() => {alert("Your turn! Simon says, 'Click the buttons exactly as I did!'")}) // parameter of sequence taken and used to change background of divs. Parameter of function taken that sends an alert after flashing.
 }
 
 // *** these functions compose the player's move *** //
@@ -124,7 +141,7 @@ const increaseClicks = () => {
 
 // feels like this could be dryer 
 const pushClickToArray = (e: MouseEvent) => {
-    const currentClick =  e.currentTarget
+    const currentClick: HTMLElement =  e.currentTarget!
     if (currentClick.id === "green") { // says id does not exist but it successfully console logs
         playerSequence.push(greenButton)
     } else if (currentClick.id === "red") {
@@ -147,20 +164,20 @@ const resetPlayerSequence = () => {
 const compareSequences = () => {
     return (playerSequence[clicks-1].id === goalSequence[clicks-1].id)
     }
-// *** CURRENT ISSUE not triggering else block
+
 const playerCopies = (e: MouseEvent) => {
     if (clicks < goalSequence.length) {
         increaseClicks()
         pushClickToArray(e)
-        flashLights(playerSequence)
+        flashLights(playerSequence, () => {}) // this functions requires a parameter of a function but in the context its being called here, it does not need an alert. I consulted someone w experience to put an empty function here.
         if (compareSequences() === false) {
             alert(`Oops! You pressed the wrong button. Simon wins! You earned ${score} points.`)
+        }else {
+            alert("You did exactly what Simon said! Great job. Click start when you are ready for the next round.")
+            increaseScore()
+            resetPlayerSequence()
         }
-    } else {
-        alert("You did exactly what Simon said! Great job. Click start when you are ready for the next round.")
-        increaseScore()
-        resetPlayerSequence()
-    }
+    } 
 }
 
 // ===== EVENT LISTENERS ===== //
