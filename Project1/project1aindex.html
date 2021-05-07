@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Says</title>
+    <link rel="stylesheet" href="project1astyle.css">
+    <script src="project1a.js" charset="utf-8" defer></script>
+</head>
+<body>
+    <div class = "container" id = "intro">
+        <h1>Simon Says</h1>
+        <ul>
+            <li class = "instructions">Click "start" to begin the game.</li>
+            <li class = "instructions">Simon will flash a pattern on the buttons.</li> 
+            <li>Press the buttons in the same order.</li>
+        </ul>
+    </div>
+    <div class = "container" id = "simon-interface">
+        <div class = "column">
+            <div class = "simon-button" id = "green"></div>
+            <div class = "simon-button" id = "red"></div>
+        </div>
+        <div class = "column">
+            <div class = "simon-button" id = "yellow"></div>
+            <div class = "simon-button" id = "blue"></div>
+        </div>
+    </div>
+    <div class = "container" id = "initialize-and-results">
+        <button>START</button>
+        <h4 class = "results" id = "simon-results"></h4>
+        <h4 class = "results" id = "player-results"></h4>
+        <div id = "score">
+            <h2 id = "score-label">Score:</h2>
+            <h2 id = "score-value"></h2>
+        </div>
+    </div>
+</body>
+</html>

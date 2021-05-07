@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@100;500&display=swap');
+
+html {
+    background-color: #191970;
+    display: table;
+    margin: auto;
+    width: 80%;
+}
+/* used https://stackoverflow.com/questions/6464592/how-to-align-entire-html-body-to-the-center to align center */
+
+body {
+    text-align: center;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'Poppins', sans-serif;
+}
+
+div {
+    margin: 0.5em;
+    border-radius: 25px;
+}
+
+ul {
+    display: inline;
+    padding: 0;
+}
+
+li {
+    margin: 0.1em;
+    font-size: 0.7em;
+    list-style: none;
+}
+
+.container {
+    background-color: #E6E6FA;
+}
+
+/* ===== STYLING OF INTRO ===== */
+#intro {
+    margin: 0.5em;
+    padding-bottom: 1em;
+}
+
+h1 {
+    margin: 0.1em;
+    padding: 0.01em; 
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 4em;
+    color: #FA8072;
+}
+
+p {
+    color: #191970;
+}
+
+
+/* ===== STYLING OF SIMON INTERFACE ===== */
+#simon-interface {
+    width: 98%;
+    height: 17em;
+    background-color: #E6E6FA;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.column {
+    margin: 0
+}
+
+.simon-button {
+    height:100px;
+    width: 100px;
+    border-radius: 10%;
+    box-shadow: 2px 2px 4px #000000;
+    /* used https://www.w3schools.com/cssref/css3_pr_box-shadow.asp for ^^^^^ */
+    cursor: pointer;
+}
+
+/* used https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient() for radial gradient */
+
+#green {
+    background-color: #3b7a62;
+}
+
+#red {
+    background-color: #6d3232;
+}
+
+#yellow {
+    background-color: #b8b849;
+}
+
+#blue {
+    background-color: #327d96;
+}
+
+/* ===== STYLING OF INITIALIZE, RESULTS, AND SCORING ===== */
+
+button {
+    margin: 0.5em;
+    margin-top: 1.5em;
+    height: 3em;
+    width: 5em;
+    font-family: 'Poppins', sans-serif;
+    color: #E6E6FA;
+    background-color: #FA8072;
+    border-radius: 10%;
+    border-color: #E6E6FA;
+    box-shadow: 2px 2px 4px #000000;
+    cursor: pointer;
+}
+
+h4 {
+    height: 1em;
+}
+
+h2 {
+    text-align: center;
+    color: #191970;
+    height: 100%;
+    padding: 1em;
+    margin: 0.25em;
+    background-color: #E6E6FA;
+    display: inline-flex;
+    justify-content: center;
+    align-items: baseline;
+    border-radius: 25px;
+}
+
+#score-value {
+    height: 15%;
+    width: 25%;
+    background-color: #FFD700;
+}
