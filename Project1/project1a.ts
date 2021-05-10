@@ -103,11 +103,7 @@ const frenchFryButton: AvatarButton = {
     avatarUnused: "none",
 }
 
-// const puppyButton: HTMLButtonElement = document.querySelector("#puppy-button")
-// const rainbowButton: HTMLButtonElement = document.querySelector("#rainbow-button")
-// const frenchFryButton: HTMLButtonElement = document.querySelector("#french-fry-button")
-
-//  ***** game interface variables ***** //
+//  ***** game experience variables ***** //
 const greenButton: SimonButton = {
     id: "green",
     lightOff: "#3b7a62",
@@ -150,15 +146,15 @@ let score: number = 0
 // ===== FUNCTIONS ===== //
 
 //  *** these function are used for both simon's demonstration and the player's move *** //
-const getAvatarButtonElement = (button: AvatarButton) => { // this accesses the HTML element from the AvatarButton interface
+const getAvatarButtonElement = (button: AvatarButton) => { // accesses the HTML element from the AvatarButton interface
     return document.getElementById(button.idButton)! 
 }
 
-const setAvatar = (button: AvatarButton) => { // this changes the display of the selected avatar to block
+const setAvatar = (button: AvatarButton) => { // changes the display of the selected avatar to block
     document.getElementById(button.idAvatar).style.display = button.avatarInUse
 }
 
-const closeModal = () => { // this closes the modal
+const closeModal = () => { // closes the modal
     modal.style.display = "none"
 }
 
@@ -175,11 +171,11 @@ const timeout = <output>(func: () => output, milliseconds: number) => new Promis
     }, milliseconds)
 }) // this function is a promise that takes a function and a number of milliseconds as a parameter, waits at least the amount of time in the seconds, and then executes the function and returns a promise (in the case of flashLights the return will be changing and unchanging the style which is technically a void output bc no value is returning, just manipulating HTML elements). This is effectively a timeout but it is a promise instead of a callback so you can use async/await to force the different promises to wait for each other.
 
-// const sleep = (milliseconds: number) => new Promise(()=> {
+// const sleep = (milliseconds: number) => new Promise(()=> { // simpler function to replace timeout() did not work but plan to tinker around with it
 //     setTimeout(() => {}, milliseconds)
 // })
 
-const flashLights = async (buttons: SimonButton[]) => { // this function takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
+const flashLights = async (buttons: SimonButton[]) => { // takes an array of HTML elements (buttons) as a parameter. It loops over each button and waits 500 milliseconds, changes its color, waits 500 milliseconds, and changes it back. The color change is dependent on a conditional block assessing which button was pressed.
     // buttons.forEach((button) => {
     for (const button of buttons) { // someone with experience suggested I use a for of loop rather than a for each loop to execute async functions so that the loop iterated over each individual element (staying in the scope of flashLights()) rather than applying a function to each element at the same time (creating a separate scope from flashLights()). I used https://medium.com/@nataliecardot/foreach-vs-for-of-vs-for-in-loops-472146fc1a1f as a resource to understand more. 
         await timeout(() => { // referenced https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await for theory and formatting also asked someone with experience about formatting
@@ -193,24 +189,24 @@ const flashLights = async (buttons: SimonButton[]) => { // this function takes a
 }
 
 // *** these functions compose Simon's demonstration *** //
-const setGoalSequence = () => { // this function pushes an element from simonButtons at randomIndex to goalSequence
+const setGoalSequence = () => { // pushes an element from simonButtons at randomIndex to goalSequence
     const randomIndex = Math.floor(Math.random()*simonButtons.length)
     goalSequence.push(simonButtons[randomIndex]) // the random index element is added to the goalSequence AND remains on the simonButtons
     return goalSequence
 }
 
-const clearResults = () => { // this resets the inner text of H4 to nothing at the start of each new round (clearing the results so the player cannot reference the pattern)
+const clearResults = () => { // resets the inner text of H4 to nothing at the start of each new round (clearing the results so the player cannot reference the pattern)
     simonResultsH4.innerText = ""
     playerResultsH4.innerText = ""
 }
 
-const simonSays = async () => {
+const simonSays = async () => { // main function for Simon's demo
     clearResults()
     const sequenceForRound = setGoalSequence() // Simon demonstrates the sequence of lights for the player to copy
-    await flashLights(sequenceForRound) // parameter of sequence taken and used to change background of divs.
+    await flashLights(sequenceForRound) // parameter of sequence taken and used to change background of divs
     await timeout(() => {alert("Your turn! Simon says, 'Click the buttons exactly as I did!'")}, 250) // this adds the alert to the event queue so it waits to pop up until the other items have run
     startButton.removeEventListener("click", startButtonListener) // this references the function I am removing
-    simonButtons.forEach(button => {
+    simonButtons.forEach(button => { // adding this event listener here ensures that the buttons cannot be clicked until after Simon has demo'd
         getSimonElement(button).addEventListener("click", playerCopies)
     })
 }
@@ -220,13 +216,12 @@ const increaseClicks = () => {
     clicks = clicks + 1
 }
 
-const getPlayerClick = (e) => {
+const getPlayerClick = (e) => { // accesses the id of the HTMLElement clicked and .find()s the element with a matching id in the simonButtons array
     const currentClick = e.currentTarget as HTMLElement // consulted someone with experience as well as this article to understand implementation of "as" https://stackoverflow.com/questions/55781559/what-does-the-as-keyword-do
     return simonButtons.find(button => button.id === currentClick.id)
 }
 
-// feels like this could be dryer 
-const pushClickToArray = async (e: MouseEvent) => {
+const pushClickToArray = async (e: MouseEvent) => { // saves the return of getPlayerClick() to a variable and uses it to push a value to playerSequence[]
     const currentClick = getPlayerClick(e)
     playerSequence.push(currentClick)
 }
@@ -236,22 +231,22 @@ const increaseScore = () => {
     scoreH4.innerText = `${score}`
 }
 
-const resetRound = () => { // this empties playerSequence[] and sets clicks to zero so there are no duplicates as they are adjusted during the next round
+const resetRound = () => { // mpties playerSequence[] and sets clicks to zero so there are no duplicates as they are adjusted during the next round
     playerSequence = []
     clicks = 0
     startButton.addEventListener("click", startButtonListener) // this turns the start button event listener back on so the next round can begin
 }
 
-const compareSequences = () => {
+const compareSequences = () => { // compares the most recently pushed item of each array to ensure player accuracy
     return (playerSequence[clicks-1].id === goalSequence[clicks-1].id)
     }
 
-const revealResults = () => {
+const revealResults = () => { // shows results of round above score 
     simonResultsH4.innerText = `Simon clicked: ${goalSequence.map(button => button.id).join(" ")}`
     playerResultsH4.innerText =  `You clicked: ${playerSequence.map(button => button.id).join(" ")}` // I collaborated with someone with experience on how to structure this
 }
 
-const playerCopies = async (e: MouseEvent) => {
+const playerCopies = async (e: MouseEvent) => { // main function for player's move
     increaseClicks()
     await pushClickToArray(e) 
     await flashLights([playerSequence[playerSequence.length-1]])// identified an issue that each time player clicked, the whole array lit up. By putting entire parameter in an array, I was able to light up only one at a time.
@@ -262,13 +257,16 @@ const playerCopies = async (e: MouseEvent) => {
         revealResults()
         increaseScore()
         resetRound()
+        simonButtons.forEach(button => { // removing the event listener here stops the player from being able to light up buttons on click
+            getSimonElement(button).removeEventListener("click", playerCopies)
+        })
     }
-    simonButtons.forEach(button => {
-        getSimonElement(button).removeEventListener("click", playerCopies)
-    })
+    
 }
 
 // ===== EVENT LISTENERS ===== //
+// had to fluidly add and remove event listeners throughout the game experience so there are additional adds and removes throughout other functions. This event listener starts the game
+
 const startButtonListener = () => {
     simonSays()
 } // had to save this to a variable in order to reference the function I;m listening to so I can remove it later

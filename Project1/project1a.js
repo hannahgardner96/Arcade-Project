@@ -33,10 +33,7 @@ const frenchFryButton = {
     avatarInUse: "block",
     avatarUnused: "none",
 };
-// const puppyButton: HTMLButtonElement = document.querySelector("#puppy-button")
-// const rainbowButton: HTMLButtonElement = document.querySelector("#rainbow-button")
-// const frenchFryButton: HTMLButtonElement = document.querySelector("#french-fry-button")
-//  ***** game interface variables ***** //
+//  ***** game experience variables ***** //
 const greenButton = {
     id: "green",
     lightOff: "#3b7a62",
@@ -90,7 +87,7 @@ const timeout = (func, milliseconds) => new Promise((resolve) => {
         resolve(func());
     }, milliseconds);
 }); // this function is a promise that takes a function and a number of milliseconds as a parameter, waits at least the amount of time in the seconds, and then executes the function and returns a promise (in the case of flashLights the return will be changing and unchanging the style which is technically a void output bc no value is returning, just manipulating HTML elements). This is effectively a timeout but it is a promise instead of a callback so you can use async/await to force the different promises to wait for each other.
-// const sleep = (milliseconds: number) => new Promise(()=> {
+// const sleep = (milliseconds: number) => new Promise(()=> { // simpler function to replace timeout() did not work but plan to tinker around with it
 //     setTimeout(() => {}, milliseconds)
 // })
 const flashLights = (buttons) => __awaiter(void 0, void 0, void 0, function* () {
@@ -117,7 +114,7 @@ const clearResults = () => {
 const simonSays = () => __awaiter(void 0, void 0, void 0, function* () {
     clearResults();
     const sequenceForRound = setGoalSequence(); // Simon demonstrates the sequence of lights for the player to copy
-    yield flashLights(sequenceForRound); // parameter of sequence taken and used to change background of divs.
+    yield flashLights(sequenceForRound); // parameter of sequence taken and used to change background of divs
     yield timeout(() => { alert("Your turn! Simon says, 'Click the buttons exactly as I did!'"); }, 250); // this adds the alert to the event queue so it waits to pop up until the other items have run
     startButton.removeEventListener("click", startButtonListener); // this references the function I am removing
     simonButtons.forEach(button => {
@@ -132,7 +129,6 @@ const getPlayerClick = (e) => {
     const currentClick = e.currentTarget; // consulted someone with experience as well as this article to understand implementation of "as" https://stackoverflow.com/questions/55781559/what-does-the-as-keyword-do
     return simonButtons.find(button => button.id === currentClick.id);
 };
-// feels like this could be dryer 
 const pushClickToArray = (e) => __awaiter(void 0, void 0, void 0, function* () {
     const currentClick = getPlayerClick(e);
     playerSequence.push(currentClick);
@@ -165,12 +161,13 @@ const playerCopies = (e) => __awaiter(void 0, void 0, void 0, function* () {
         revealResults();
         increaseScore();
         resetRound();
+        simonButtons.forEach(button => {
+            getSimonElement(button).removeEventListener("click", playerCopies);
+        });
     }
-    simonButtons.forEach(button => {
-        getSimonElement(button).removeEventListener("click", playerCopies);
-    });
 });
 // ===== EVENT LISTENERS ===== //
+// had to fluidly add and remove event listeners throughout the game experience so there are additional adds and removes throughout other functions. This event listener starts the game
 const startButtonListener = () => {
     simonSays();
 }; // had to save this to a variable in order to reference the function I;m listening to so I can remove it later
