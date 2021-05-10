@@ -23,7 +23,7 @@
 // DONE onclick, store innerText of button in currentGuess
 // if secretWord.some(currentGuess) === false (2.)
 // DONE  alert the letter is not in the word
-// increase incorrect guesses by one 
+// DONE increase incorrect guesses by one 
 // check if incorrect guesses is 6 (4.)
 // if === 6, alert they lost
 // if secretWord.some(currentGuess) === true (2.)
@@ -78,7 +78,10 @@ const compareCurrentGuess = (element) => {
     return (splitWordArr.some(letter => letter === element.id));
 };
 const increaseIncorrectGuesses = () => {
+    const incorrectGuessesH3 = document.getElementById("remaining-guesses");
+    incorrectGuessesH3.innerText = "";
     incorrectGuesses = incorrectGuesses + 1;
+    incorrectGuessesH3.innerText = `Incorrect Guesses: ${incorrectGuesses}`;
 };
 const makeLIArray = () => {
     let LINodeList = document.querySelectorAll(`.hidden-letter`);
@@ -102,7 +105,7 @@ const playerGuesses = (e) => {
     }
     else if (compareCurrentGuess(letter) === false) {
         alert("Oops! That letter is not in the secret word.");
-        increaseIncorrectGuesses;
+        increaseIncorrectGuesses();
     }
     if (checkLIDisplay(LIArray)) {
         alert("You guessed the word in time. You win!");
