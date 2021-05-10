@@ -110,6 +110,9 @@ const playerGuesses = (e) => {
     if (checkLIDisplay(LIArray)) {
         alert("You guessed the word in time. You win!");
     }
+    if (incorrectGuesses === 6) {
+        alert("You have 6 incorrect guesses. You did nit guess the word in time. You lost.");
+    }
 };
 // ===== EVENT LISTENERS ===== //
 const startButtonListener = () => {
