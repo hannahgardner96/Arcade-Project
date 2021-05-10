@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+html {
+    background: #000080;
+    padding: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    text-align: center;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'Fredoka One', cursive;
+    color: #353935;
+}
+
+button {
+    font-family: 'Fredoka One', cursive;
+    background: #FFBF00;
+    border: solid 2px #353935;
+    margin: 0.3em;
+    cursor: pointer;
+}
+
+#snowman-interface {
+    display: inline-flex;
+    background: #E0FFFF;
+    border-radius: 25px;
+}
+
+/* ===== STYLING OF INTRO ===== */
+#intro {
+    background: #E0FFFF;
+    border-radius: 25px;
+}
+
+h1 {
+    padding: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+p {
+    padding: 0.5em;
+    margin-top: 0;
+}
+
+/* ===== STYLING OF IMG ===== */
+img {
+    object-fit: cover;
+    width: 25em;
+    height: 30em;
+    padding: 2.5%;
+}
+
+/* ===== STYLING OF UL/LI ===== */
+ul {
+    list-style: none;
+}
+
+li {
+    display: none;
+    padding: 0.5em;
+}
+
+/* ===== STYLING OF RIGHT SIDE ===== */
+#right-side {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content:stretch;
+    padding: 2.5%;
+    width: 35em;
+}
+
+#secret-word {
+    padding: 5%;
+}
+
+#start-button {
+    padding: 0;
+    width: 15%;
+    height: 7%;
+    align-self: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#alphabet-buttons-div {
+    width: 70%;
+    align-self: center;
+    padding: 3%;
+}
+
+#alphabet-buttons {
+    padding: 2%;
+    margin: 1em;
+}
