@@ -26,12 +26,11 @@
         // if secretWord.some(currentGuess) === false (2.)
             // DONE  alert the letter is not in the word
             // DONE increase incorrect guesses by one 
-            // check if incorrect guesses is 6 (4.)
+            // DONE check if incorrect guesses is 6 (4.)
                 // if === 6, alert they lost
         // if secretWord.some(currentGuess) === true (2.)
             // DONE forEach LI, if innerText === currentGuess, change display from none to inline
-            // forEach LI, if display === "inline", alert player won, else alert to guess again (5.)
-            // set curentGuess to an empty string
+            // DONE forEach LI, if display === "inline", alert player won, else alert to guess again (5.)
 
 // ===== INTERFACES ===== //
 
@@ -49,19 +48,19 @@ let incorrectGuesses = 0
 
 // ===== FUNCTIONS ===== //
 // *** FUNCTIONS TO SET UP SECRET WORD *** //
-const selectSecretWord = () => {
+const selectSecretWord = () => { // takes word from availableWords[] at randomIndex and pushes it to secretWord[]
     const randomIndex = Math.floor(Math.random()*availableWords.length)
     secretWord.push(availableWords[randomIndex])
     availableWords.splice(randomIndex, 1)
     return secretWord
 }
 
-const splitWord = () => {
+const splitWord = () => { // stores values from selectSecretWord(), splits it at index[0], shifts all letters to uppercase, and splits the word at the breaks between letters. This value is stored globally because it is used by both the set up of the secret word and the guesses made by the player
     let arrayToSplit = selectSecretWord()
     splitWordArr = arrayToSplit[0].toUpperCase().split("")
 }
 
-const inputSecretWordLI = () => {
+const inputSecretWordLI = () => { // loops over splitWordArr, creates an li for each index, sets the innerText to the value at the index, and appends to secretWordUL (default display value of none)
     splitWordArr.forEach(letter => {
       let newLetter = document.createElement("li")
       newLetter.innerText = letter
@@ -72,45 +71,45 @@ const inputSecretWordLI = () => {
 }
 
 // *** FUNCTIONS TO RESPOND TO PLAYER GUESSES *** //
-const recordGuess = (e) => {
+const recordGuess = (e) => { // stores the button clicked as HTMLButtonElement
     let letter = e.currentTarget as HTMLButtonElement
     return letter
 }
 
-const changeLetterDisplay = (element) => {
+const changeLetterDisplay = (element) => { // takes button clicked, changes its display, and removes the event listener
     element.style.backgroundColor = "gray"
     element.removeEventListener("click", letterListener)
 }
 
-const alertLetterUnavailable = (element) => {
+const alertLetterUnavailable = (element) => { // adds an event listener to previously clicked button that alerts player that they already used this letter.
     element.addEventListener("click", () => {
         alert("You have already used this letter.")
     })
 }
 
-const compareCurrentGuess = (element) => {
+const compareCurrentGuess = (element) => { // evaluates whether the letter clicked is contained in the array of secret word letters (splitWordArr)
     return (splitWordArr.some(letter => letter === element.id))
 }
 
-const increaseIncorrectGuesses = () => {
+const increaseIncorrectGuesses = () => { // resets the innerText of h3 id = #remaining-guesses, increases incorrectGuesses, and appends incorrectGuesses to the h3
     const incorrectGuessesH3:HTMLHeadElement = document.getElementById("remaining-guesses")
     incorrectGuessesH3.innerText = ""
     incorrectGuesses = incorrectGuesses + 1
     incorrectGuessesH3.innerText = `Incorrect Guesses: ${incorrectGuesses}`
 }
 
-const makeLIArray = () => {
+const makeLIArray = () => { // makes an array of all the LI items (used to change display of only the correct guesses by filtering through this array)
     let LINodeList: NodeListOf<HTMLLIElement> = document.querySelectorAll(`.hidden-letter`)
     let LIArray: HTMLLIElement[] = Array.from(LINodeList)
     return LIArray
 }
 
-const checkLIDisplay = (arr: HTMLLIElement[]) => {
+const checkLIDisplay = (arr: HTMLLIElement[]) => { // checks if all the letters have been revealed (display changed to inline)
     let arrayOfStyles = arr.map(x => window.getComputedStyle(x).display)
     return arrayOfStyles.every(x => x === "inline")
 }
 
-const playerGuesses = (e) => {
+const playerGuesses = (e) => { // main function that runs through player's guesses
     let letter = recordGuess(e)
     let LIArray = makeLIArray()
     changeLetterDisplay(letter)

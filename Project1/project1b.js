@@ -24,12 +24,11 @@
 // if secretWord.some(currentGuess) === false (2.)
 // DONE  alert the letter is not in the word
 // DONE increase incorrect guesses by one 
-// check if incorrect guesses is 6 (4.)
+// DONE check if incorrect guesses is 6 (4.)
 // if === 6, alert they lost
 // if secretWord.some(currentGuess) === true (2.)
 // DONE forEach LI, if innerText === currentGuess, change display from none to inline
-// forEach LI, if display === "inline", alert player won, else alert to guess again (5.)
-// set curentGuess to an empty string
+// DONE forEach LI, if display === "inline", alert player won, else alert to guess again (5.)
 // ===== INTERFACES ===== //
 // ===== VARIABLES ===== //
 const startButton = document.getElementById("start-button");
