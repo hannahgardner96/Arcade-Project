@@ -56,7 +56,7 @@ img {
 	position: fixed;
     margin-top: 10%;
     margin-left: 15%;
-	height: 60%;
+	height: 50%;
 	width: 50%;
 	z-index: 1;
 	/*This puts our modal in front of the body (which has a default z-index setting of `0`*/
@@ -84,6 +84,8 @@ img {
 
 #select-intro {
     color: white;
+    font-size: 100%;
+    height: 40%;
 }
 
 .select {

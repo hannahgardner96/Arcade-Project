@@ -46,11 +46,15 @@
         // DONE end turn (5.)
         // DONE alert to click button to move onto next round
         // next round = click of initialize demo button (7.)
+
 // *** CURRENT ISSUES *** //
-// sometimes flash light in playerCopies() is only playing the last element of the array and sometimes it isn't
-// no spaces in h2 appends
-// trouble reading ID and comparing in compareSequences() but only sometimes???
-// ONLY when puppy button isselected, start is automatically triggered
+// "select avatar" not visible when screen size changes
+
+// DONE possible to click buttons before start
+// DONEtrouble reading ID and comparing in compareSequences() but only sometimes???
+// DONE no spaces in h2 appends
+// DONE sometimes flash light in playerCopies() is only playing the last element of the array and sometimes it isn't
+// DONE ONLY when puppy button is selected, start is automatically triggered
 //  DONE flashLight flashes all the indices of an array at the same time. AND if the second index is the same color as the first, it just flashes once. Look into recursive timeouts.
 // DONE not triggering else block in playerCopies()
 // DONE after a player clicks a button, it alerts them immediately whether they were correct/incorrect rather than waiting until after their light flashes.
@@ -128,7 +132,7 @@ const blueButton: SimonButton = {
     lightOn: "#00bfff"
 }
 
-const startButton = document.querySelector("button")!
+const startButton = document.querySelector("#start-button")!
 const simonResultsH4 = document.getElementById("simon-results")!
 const playerResultsH4 = document.getElementById("player-results")!
 const scoreH4 = document.getElementById("score-value")!
@@ -145,16 +149,16 @@ let score: number = 0
 
 // ===== FUNCTIONS ===== //
 
-//  *** these function is used for both simon's demonstration and the player's move *** //
-const getAvatarButtonElement = (button: AvatarButton) => { 
+//  *** these function are used for both simon's demonstration and the player's move *** //
+const getAvatarButtonElement = (button: AvatarButton) => { // this accesses the HTML element from the AvatarButton interface
     return document.getElementById(button.idButton)! 
 }
 
-const setAvatar = (button: AvatarButton) => {
+const setAvatar = (button: AvatarButton) => { // this changes the display of the selected avatar to block
     document.getElementById(button.idAvatar).style.display = button.avatarInUse
 }
 
-const closeModal = () => {
+const closeModal = () => { // this closes the modal
     modal.style.display = "none"
 }
 
@@ -163,7 +167,6 @@ const getSimonElement = (button: SimonButton) => { // suggestion from someone w 
 }
 
 // const timeout = (f, milliseconds) => new Promise(resolve => {
-
 // }) // if I were creating a promise without ts, I would structure it like this. Below is the structure with ts.
 
 const timeout = <output>(func: () => output, milliseconds: number) => new Promise<output>((resolve) => {
@@ -196,7 +199,7 @@ const setGoalSequence = () => { // this function pushes an element from simonBut
     return goalSequence
 }
 
-const clearResults = () => {
+const clearResults = () => { // this resets the inner text of H4 to nothing at the start of each new round (clearing the results so the player cannot reference the pattern)
     simonResultsH4.innerText = ""
     playerResultsH4.innerText = ""
 }
@@ -207,6 +210,9 @@ const simonSays = async () => {
     await flashLights(sequenceForRound) // parameter of sequence taken and used to change background of divs.
     await timeout(() => {alert("Your turn! Simon says, 'Click the buttons exactly as I did!'")}, 250) // this adds the alert to the event queue so it waits to pop up until the other items have run
     startButton.removeEventListener("click", startButtonListener) // this references the function I am removing
+    simonButtons.forEach(button => {
+        getSimonElement(button).addEventListener("click", playerCopies)
+    })
 }
 
 // *** these functions compose the player's move *** //
@@ -214,18 +220,15 @@ const increaseClicks = () => {
     clicks = clicks + 1
 }
 
+const getPlayerClick = (e) => {
+    const currentClick = e.currentTarget as HTMLElement // consulted someone with experience as well as this article to understand implementation of "as" https://stackoverflow.com/questions/55781559/what-does-the-as-keyword-do
+    return simonButtons.find(button => button.id === currentClick.id)
+}
+
 // feels like this could be dryer 
 const pushClickToArray = async (e: MouseEvent) => {
-    const currentClick: HTMLElement =  e.currentTarget!
-    if (currentClick.id === "green") { // says id does not exist but it successfully console logs
-        playerSequence.push(greenButton)
-    } else if (currentClick.id === "red") {
-        playerSequence.push(redButton)
-    } else if (currentClick.id === "yellow") {
-        playerSequence.push(yellowButton)
-    } else if (currentClick.id === "blue") {
-        playerSequence.push(blueButton)
-    }
+    const currentClick = getPlayerClick(e)
+    playerSequence.push(currentClick)
 }
 
 const increaseScore = () => {
@@ -233,64 +236,49 @@ const increaseScore = () => {
     scoreH4.innerText = `${score}`
 }
 
-const resetRound = () => {
+const resetRound = () => { // this empties playerSequence[] and sets clicks to zero so there are no duplicates as they are adjusted during the next round
     playerSequence = []
     clicks = 0
-    startButton.addEventListener("click", startButtonListener)
+    startButton.addEventListener("click", startButtonListener) // this turns the start button event listener back on so the next round can begin
 }
 
 const compareSequences = () => {
     return (playerSequence[clicks-1].id === goalSequence[clicks-1].id)
     }
 
-const revealResults = async () => {
-    simonResultsH4.innerText = "Simon clicked: "
-    playerResultsH4.innerText = "You clicked: "
-    goalSequence.forEach(light => {
-        simonResultsH4.innerText += `${ light.id}`
-    })
-    playerSequence.forEach(light => {
-        playerResultsH4.innerText += `${ light.id}`
-    })
+const revealResults = () => {
+    simonResultsH4.innerText = `Simon clicked: ${goalSequence.map(button => button.id).join(" ")}`
+    playerResultsH4.innerText =  `You clicked: ${playerSequence.map(button => button.id).join(" ")}` // I collaborated with someone with experience on how to structure this
 }
 
 const playerCopies = async (e: MouseEvent) => {
     increaseClicks()
-    if (clicks < goalSequence.length) {
-        await pushClickToArray(e)
-        await flashLights(playerSequence) // this functions requires a parameter of a function but in the context its being called here, it does not need an alert. I consulted someone w experience to put an empty function here.
-        if (compareSequences() === false) {
+    await pushClickToArray(e) 
+    await flashLights([playerSequence[playerSequence.length-1]])// identified an issue that each time player clicked, the whole array lit up. By putting entire parameter in an array, I was able to light up only one at a time.
+    if (compareSequences() === false) {
             await timeout(() => {alert(`Oops! You pressed the wrong button. Simon wins! You earned ${score} points.`)}, 250)
-        }
-    } else {
-        await pushClickToArray(e)
-        await flashLights([playerSequence[playerSequence.length-1]]) // identified an issue that each time player clicked, the whole array lit up. By putting entire parameter in an array, I was able to light up only one at a time.
+    } else if (clicks === goalSequence.length) {
         await timeout(() => {alert("You did exactly what Simon said! Great job. Click start when you are ready for the next round.")}, 250)
-        await revealResults()
+        revealResults()
         increaseScore()
         resetRound()
-        
-    } 
+    }
+    simonButtons.forEach(button => {
+        getSimonElement(button).removeEventListener("click", playerCopies)
+    })
 }
 
 // ===== EVENT LISTENERS ===== //
-avatarOptions.forEach(button => {
-    getAvatarButtonElement(button).onclick = (e) => {
-        setAvatar(button)
-        closeModal()
-    }
-})
-
 const startButtonListener = () => {
     simonSays()
 } // had to save this to a variable in order to reference the function I;m listening to so I can remove it later
 
-startButton.addEventListener("click", startButtonListener) // this could not be in the format of "onclick" because "removeEventListener" could not target and remove onclick
-
-// Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
-simonButtons.forEach(button => {
-    getSimonElement(button).onclick = (e) => {
-        playerCopies(e)
+avatarOptions.forEach(button => {
+    getAvatarButtonElement(button).onclick = (e) => {
+        setAvatar(button)
+        closeModal()
+        startButton.addEventListener("click", startButtonListener) // this could not be in the format of "onclick" because "removeEventListener" could not target and remove onclick
+        
     }
 })
 
