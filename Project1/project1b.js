@@ -59,6 +59,9 @@ const inputSecretWordLI = () => {
         secretWordUL.appendChild(newLetter);
     });
 };
+const removeStartBtnEventListener = () => {
+    startButton.removeEventListener("click", startButtonListener);
+};
 // *** FUNCTIONS TO RESPOND TO PLAYER GUESSES *** //
 const recordGuess = (e) => {
     let letter = e.currentTarget;
@@ -66,7 +69,7 @@ const recordGuess = (e) => {
 };
 const changeLetterDisplay = (element) => {
     element.style.backgroundColor = "gray";
-    element.removeEventListener("click", letterListener);
+    element.removeEventListener("click", playerGuesses);
 };
 const alertLetterUnavailable = (element) => {
     element.addEventListener("click", () => {
@@ -107,10 +110,12 @@ const playerGuesses = (e) => {
         increaseIncorrectGuesses();
     }
     if (checkLIDisplay(LIArray)) {
-        alert("You guessed the word in time. You win!");
+        alert("You guessed the word in time. You win! Click OK to reload and play again.");
+        window.location.reload();
     }
     if (incorrectGuesses === 6) {
-        alert("You have 6 incorrect guesses. You did nit guess the word in time. You lost.");
+        alert("You have 6 incorrect guesses. You did not guess the word in time. You lost. Click OK to reload and play again.");
+        window.location.reload();
     }
 };
 // ===== EVENT LISTENERS ===== //
@@ -118,11 +123,10 @@ const startButtonListener = () => {
     selectSecretWord();
     splitWord();
     inputSecretWordLI();
+    removeStartBtnEventListener();
+    alert("A secret word has been chosen. Start guessing!");
+    availableLetters.forEach(letter => {
+        document.getElementById(letter).addEventListener("click", playerGuesses);
+    });
 };
 startButton.addEventListener("click", startButtonListener);
-const letterListener = (e) => {
-    playerGuesses(e);
-};
-availableLetters.forEach(letter => {
-    document.getElementById(letter).addEventListener("click", letterListener);
-});

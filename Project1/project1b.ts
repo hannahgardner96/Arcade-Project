@@ -70,6 +70,10 @@ const inputSecretWordLI = () => { // loops over splitWordArr, creates an li for 
     })
 }
 
+const removeStartBtnEventListener = () => {
+    startButton.removeEventListener("click", startButtonListener)
+}
+
 // *** FUNCTIONS TO RESPOND TO PLAYER GUESSES *** //
 const recordGuess = (e) => { // stores the button clicked as HTMLButtonElement
     let letter = e.currentTarget as HTMLButtonElement
@@ -78,7 +82,7 @@ const recordGuess = (e) => { // stores the button clicked as HTMLButtonElement
 
 const changeLetterDisplay = (element) => { // takes button clicked, changes its display, and removes the event listener
     element.style.backgroundColor = "gray"
-    element.removeEventListener("click", letterListener)
+    element.removeEventListener("click", playerGuesses)
 }
 
 const alertLetterUnavailable = (element) => { // adds an event listener to previously clicked button that alerts player that they already used this letter.
@@ -124,10 +128,12 @@ const playerGuesses = (e) => { // main function that runs through player's guess
         increaseIncorrectGuesses()
     }
     if (checkLIDisplay(LIArray)) {
-        alert("You guessed the word in time. You win!")
+        alert("You guessed the word in time. You win! Click OK to reload and play again.")
+        window.location.reload()
     }
     if (incorrectGuesses === 6) {
-        alert("You have 6 incorrect guesses. You did nit guess the word in time. You lost.")
+        alert("You have 6 incorrect guesses. You did not guess the word in time. You lost. Click OK to reload and play again.")
+        window.location.reload()
     }
 }
 
@@ -136,14 +142,11 @@ const startButtonListener = () => {
     selectSecretWord()
     splitWord()
     inputSecretWordLI()
+    removeStartBtnEventListener()
+    alert("A secret word has been chosen. Start guessing!")
+    availableLetters.forEach(letter => {
+        document.getElementById(letter).addEventListener("click", playerGuesses)
+    })
 }
 
 startButton.addEventListener("click", startButtonListener)
-
-const letterListener = (e) => {
-    playerGuesses(e)
-}
-
-availableLetters.forEach(letter => {
-    document.getElementById(letter).addEventListener("click", letterListener)
-})
