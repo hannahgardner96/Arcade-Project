@@ -9,6 +9,32 @@
     <script src="project1a.js" charset="utf-8" defer></script>
 </head>
 <body>
+    <div id = "modal">
+        <div id = "modal-textbox">
+            <h1 id = "select-intro">Select your Avatar:</h1>
+            <div class = "select">
+                <img src= "https://dogtime.com/assets/uploads/2018/10/puppies-cover.jpg" alt="Puppy" class="modal-avatar" id = "modal-puppy">
+                <button id = "puppy-button">PUPPY</button>
+            </div>
+            <div class = "select">
+                <img src= "https://projects-static.raspberrypi.org/projects/rainbow-predictor/9c307d2af61c6445726b1691fb4eacc04716206b/en/images/rainbow-predictor.png" alt="Rainbow" class="modal-avatar" id = "modal-rainbow">
+                <button id = "rainbow-button">RAINBOW</button>
+            </div>
+            <div class = "select">
+                <img src= "https://cdn.dribbble.com/users/26684/screenshots/14184643/media/e5cfdb1ae2b3bd5a919db2e62ee61dcc.png?compress=1&resize=400x300" alt="French fry" class="modal-avatar" id = "modal-french-fry">
+                <button id = "french-fry-button">FRENCH FRY</button>
+            </div>
+        </div>
+    </div>
+    <!-- <audio id="sounds" loop= "false" volume = "60">
+        <source src="sounds/clap.wav" id="A" type="audio/wav">
+        <source src="sounds/boom.wav" id="S" type="audio/wav">
+        <source src="sounds/hihat.wav" id="D" type="audio/wav">
+        <source src="sounds/kick.wav" id="F" type="audio/wav">
+        <source src="sounds/snare.wav" id="G" type="audio/wav">
+        <source src="sounds/ride.wav" id="H" type="audio/wav">
+        <source src="sounds/tom.wav" id="J" type="audio/wav">
+      </audio> formatting from https://stackoverflow.com/questions/51572489/playing-sound-on-click-event-with-pure-javascript/51572658 -->
     <div class = "container" id = "intro">
         <h1>Simon Says</h1>
         <ul>
@@ -32,6 +58,10 @@
         <h4 class = "results" id = "simon-results"></h4>
         <h4 class = "results" id = "player-results"></h4>
         <div id = "score">
+            <img src= "https://dogtime.com/assets/uploads/2018/10/puppies-cover.jpg" alt="Puppy" class="avatar" id = "puppy">
+            <img src= "https://projects-static.raspberrypi.org/projects/rainbow-predictor/9c307d2af61c6445726b1691fb4eacc04716206b/en/images/rainbow-predictor.png" alt="Rainbow" class="avatar" id = "rainbow">
+            <img src= "https://cdn.dribbble.com/users/26684/screenshots/14184643/media/e5cfdb1ae2b3bd5a919db2e62ee61dcc.png?compress=1&resize=400x300" alt="French fry" class="avatar" id = "french-fry">
+            
             <h2 id = "score-label">Score:</h2>
             <h2 id = "score-value"></h2>
         </div>

@@ -13,6 +13,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // ===== VARIABLES ===== //
 // ***** variables pulled from html ***** //
 // import swal from "sweetalert"
+//  ***** modal variables ***** //
+const modal = document.querySelector("#modal");
+const puppyButton = {
+    idButton: "puppy-button",
+    idAvatar: "puppy",
+    avatarInUse: "block",
+    avatarUnused: "none",
+};
+const rainbowButton = {
+    idButton: "rainbow-button",
+    idAvatar: "rainbow",
+    avatarInUse: "block",
+    avatarUnused: "none",
+};
+const frenchFryButton = {
+    idButton: "french-fry-button",
+    idAvatar: "french-fry",
+    avatarInUse: "block",
+    avatarUnused: "none",
+};
+// const puppyButton: HTMLButtonElement = document.querySelector("#puppy-button")
+// const rainbowButton: HTMLButtonElement = document.querySelector("#rainbow-button")
+// const frenchFryButton: HTMLButtonElement = document.querySelector("#french-fry-button")
+//  ***** game interface variables ***** //
 const greenButton = {
     id: "green",
     lightOff: "#3b7a62",
@@ -38,6 +62,7 @@ const simonResultsH4 = document.getElementById("simon-results");
 const playerResultsH4 = document.getElementById("player-results");
 const scoreH4 = document.getElementById("score-value");
 // ***** variables defined in TS ***** //
+const avatarOptions = [puppyButton, rainbowButton, frenchFryButton];
 const simonButtons = [greenButton, redButton, yellowButton, blueButton];
 let goalSequence = []; // used https://stackoverflow.com/questions/52423842/what-is-not-assignable-to-parameter-of-type-never-error-in-typescript to address type error in setGoalSequence function coming from the output's (this array's) type not being defined
 let playerSequence = [];
@@ -46,6 +71,15 @@ let score = 0;
 scoreH4.innerText = `${score}`;
 // ===== FUNCTIONS ===== //
 //  *** these function is used for both simon's demonstration and the player's move *** //
+const getAvatarButtonElement = (button) => {
+    return document.getElementById(button.idButton);
+};
+const setAvatar = (button) => {
+    document.getElementById(button.idAvatar).style.display = button.avatarInUse;
+};
+const closeModal = () => {
+    modal.style.display = "none";
+};
 const getSimonElement = (button) => {
     return document.getElementById(button.id); // "!" to say that this is a non-null assertion
 };
@@ -56,6 +90,9 @@ const timeout = (func, milliseconds) => new Promise((resolve) => {
         resolve(func());
     }, milliseconds);
 }); // this function is a promise that takes a function and a number of milliseconds as a parameter, waits at least the amount of time in the seconds, and then executes the function and returns a promise (in the case of flashLights the return will be changing and unchanging the style which is technically a void output bc no value is returning, just manipulating HTML elements). This is effectively a timeout but it is a promise instead of a callback so you can use async/await to force the different promises to wait for each other.
+// const sleep = (milliseconds: number) => new Promise(()=> {
+//     setTimeout(() => {}, milliseconds)
+// })
 const flashLights = (buttons) => __awaiter(void 0, void 0, void 0, function* () {
     // buttons.forEach((button) => {
     for (const button of buttons) { // someone with experience suggested I use a for of loop rather than a for each loop to execute async functions so that the loop iterated over each individual element (staying in the scope of flashLights()) rather than applying a function to each element at the same time (creating a separate scope from flashLights()). I used https://medium.com/@nataliecardot/foreach-vs-for-of-vs-for-in-loops-472146fc1a1f as a resource to understand more. 
@@ -73,16 +110,23 @@ const setGoalSequence = () => {
     goalSequence.push(simonButtons[randomIndex]); // the random index element is added to the goalSequence AND remains on the simonButtons
     return goalSequence;
 };
-const simonSays = () => {
-    const sequenceForRound = setGoalSequence(); // Simon demonstrates the sequence of lights for the player to copy
-    flashLights(sequenceForRound, () => { alert("Your turn! Simon says, 'Click the buttons exactly as I did!'"); }); // parameter of sequence taken and used to change background of divs. Parameter of function taken that sends an alert after flashing.
+const clearResults = () => {
+    simonResultsH4.innerText = "";
+    playerResultsH4.innerText = "";
 };
+const simonSays = () => __awaiter(void 0, void 0, void 0, function* () {
+    clearResults();
+    const sequenceForRound = setGoalSequence(); // Simon demonstrates the sequence of lights for the player to copy
+    yield flashLights(sequenceForRound); // parameter of sequence taken and used to change background of divs.
+    yield timeout(() => { alert("Your turn! Simon says, 'Click the buttons exactly as I did!'"); }, 250); // this adds the alert to the event queue so it waits to pop up until the other items have run
+    startButton.removeEventListener("click", startButtonListener); // this references the function I am removing
+});
 // *** these functions compose the player's move *** //
 const increaseClicks = () => {
     clicks = clicks + 1;
 };
 // feels like this could be dryer 
-const pushClickToArray = (e) => {
+const pushClickToArray = (e) => __awaiter(void 0, void 0, void 0, function* () {
     const currentClick = e.currentTarget;
     if (currentClick.id === "green") { // says id does not exist but it successfully console logs
         playerSequence.push(greenButton);
@@ -96,35 +140,58 @@ const pushClickToArray = (e) => {
     else if (currentClick.id === "blue") {
         playerSequence.push(blueButton);
     }
-};
+});
 const increaseScore = () => {
     score = score + 1;
+    scoreH4.innerText = `${score}`;
 };
-const resetPlayerSequence = () => {
+const resetRound = () => {
     playerSequence = [];
+    clicks = 0;
+    startButton.addEventListener("click", startButtonListener);
 };
 const compareSequences = () => {
     return (playerSequence[clicks - 1].id === goalSequence[clicks - 1].id);
 };
-const playerCopies = (e) => {
+const revealResults = () => __awaiter(void 0, void 0, void 0, function* () {
+    simonResultsH4.innerText = "Simon clicked: ";
+    playerResultsH4.innerText = "You clicked: ";
+    goalSequence.forEach(light => {
+        simonResultsH4.innerText += `${light.id}`;
+    });
+    playerSequence.forEach(light => {
+        playerResultsH4.innerText += `${light.id}`;
+    });
+});
+const playerCopies = (e) => __awaiter(void 0, void 0, void 0, function* () {
+    increaseClicks();
     if (clicks < goalSequence.length) {
-        increaseClicks();
-        pushClickToArray(e);
-        flashLights(playerSequence, () => { }); // this functions requires a parameter of a function but in the context its being called here, it does not need an alert. I consulted someone w experience to put an empty function here.
+        yield pushClickToArray(e);
+        yield flashLights(playerSequence); // this functions requires a parameter of a function but in the context its being called here, it does not need an alert. I consulted someone w experience to put an empty function here.
         if (compareSequences() === false) {
-            alert(`Oops! You pressed the wrong button. Simon wins! You earned ${score} points.`);
-        }
-        else {
-            alert("You did exactly what Simon said! Great job. Click start when you are ready for the next round.");
-            increaseScore();
-            resetPlayerSequence();
+            yield timeout(() => { alert(`Oops! You pressed the wrong button. Simon wins! You earned ${score} points.`); }, 250);
         }
     }
-};
+    else {
+        yield pushClickToArray(e);
+        yield flashLights([playerSequence[playerSequence.length - 1]]); // identified an issue that each time player clicked, the whole array lit up. By putting entire parameter in an array, I was able to light up only one at a time.
+        yield timeout(() => { alert("You did exactly what Simon said! Great job. Click start when you are ready for the next round."); }, 250);
+        yield revealResults();
+        increaseScore();
+        resetRound();
+    }
+});
 // ===== EVENT LISTENERS ===== //
-startButton.onclick = () => {
+avatarOptions.forEach(button => {
+    getAvatarButtonElement(button).onclick = (e) => {
+        setAvatar(button);
+        closeModal();
+    };
+});
+const startButtonListener = () => {
     simonSays();
-};
+}; // had to save this to a variable in order to reference the function I;m listening to so I can remove it later
+startButton.addEventListener("click", startButtonListener); // this could not be in the format of "onclick" because "removeEventListener" could not target and remove onclick
 // Could these be more dry? Attempted with foreach loop but got type error "buttons.forEach is not a function"
 simonButtons.forEach(button => {
     getSimonElement(button).onclick = (e) => {
