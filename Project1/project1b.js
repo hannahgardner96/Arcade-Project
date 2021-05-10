@@ -80,24 +80,32 @@ const compareCurrentGuess = (element) => {
 const increaseIncorrectGuesses = () => {
     incorrectGuesses = incorrectGuesses + 1;
 };
-// const checkLIDisplay = (arr: []) => {
-//     let 
-// }
+const makeLIArray = () => {
+    let LINodeList = document.querySelectorAll(`.hidden-letter`);
+    let LIArray = Array.from(LINodeList);
+    return LIArray;
+};
+const checkLIDisplay = (arr) => {
+    let arrayOfStyles = arr.map(x => window.getComputedStyle(x).display);
+    return arrayOfStyles.every(x => x === "inline");
+};
 const playerGuesses = (e) => {
     let letter = recordGuess(e);
+    let LIArray = makeLIArray();
     changeLetterDisplay(letter);
     alertLetterUnavailable(letter);
-    let lettersToReveal = document.querySelectorAll(`#hidden${letter.id}`);
     if (compareCurrentGuess(letter)) {
-        lettersToReveal.forEach(x => {
-            x.style.display = "inline";
+        let lettersCorrect = LIArray.filter(hiddenLetter => hiddenLetter.innerText === letter.innerText); // I had curly braces around hiddenLetter.innerText === letter.innerText without a return and the display did not change. After consulting someone w experience, I removed the curly braces and my bug was fixed. Structured this way, it is an anonymous function that does not need an explicit return.
+        lettersCorrect.forEach(item => {
+            item.style.display = "inline";
         });
     }
     else if (compareCurrentGuess(letter) === false) {
         alert("Oops! That letter is not in the secret word.");
         increaseIncorrectGuesses;
-        // } else if () {
-        //     alert("You guessed the word in time. You win!")
+    }
+    if (checkLIDisplay(LIArray)) {
+        alert("You guessed the word in time. You win!");
     }
 };
 // ===== EVENT LISTENERS ===== //
