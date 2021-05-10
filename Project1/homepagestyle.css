@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+html {
+    background: url("https://i.pinimg.com/originals/33/14/f1/3314f1ca0f08e132070ac610cedcce0b.jpg");
+    padding: 5%;
+}
+
+body {
+    text-align: center;
+    font-family: 'Russo One', sans-serif;
+    color: #212F3D;
+    background: #EAECEE;
+    border-radius: 25px;
+}
+
+a {
+    color: white;
+}
+
+h1 {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    text-shadow: 2px 2px white;
+}
+
+nav {
+    background: #40E0D0;
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    margin: 0;
+}
+
+ul {
+    display: inline-flex;
+    list-style: none;
+}
+
+li {
+    display: inline-flex;
+    padding: 5%;
+}
+
+.container {
+    display:inline-flex
+}
+
+img {
+    object-fit: cover;
+    width: 20em;
+    height: 20em;
+    padding: 2em;
+}
+
+.game-links {
+    background: black;
+    border-radius: 25px;
+    color: white;
+    margin: 1em;
+}
