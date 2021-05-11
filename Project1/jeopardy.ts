@@ -21,7 +21,24 @@
 // =============================================== //
 
 // ===== VARIABLES ===== //
+const cardFronts = Array.from(document.querySelectorAll(".question-card-front"))
+const cardBacks = Array.from(document.querySelectorAll(".question-card-back"))
+const cardAnswers = Array.from(document.querySelectorAll(".question-answer"))
 
 // ===== FUNCTIONS ===== //
+const flipCard = (e) => {
+    let cardParent: HTMLDivElement = document.getElementById(e.currentTarget.parentElement.id) as HTMLDivElement
+    cardParent.children[0].style.display = "none"
+    cardParent.children[1].style.display = "inline-block"
+}
 
 // ===== EVENT LISTENERS ===== //
+// *** event listeners dynamically added and removed throughout game. Initial listener below
+
+const cardFrontListener = (e) => {
+    flipCard(e)
+}
+
+cardFronts.forEach(card => {
+    card.addEventListener("click", cardFrontListener)
+})
