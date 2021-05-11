@@ -94,7 +94,8 @@ h3 {
     width: 70.5%;
     padding: 12%;
     margin: 1.5%;
-    font-size: 1vw;
+    font-size: 1vw; 
+    /* referenced https://stackoverflow.com/questions/16056591/font-scaling-based-on-width-of-container for font size */
     background:white; 
     color: #4DB6AC;
 }
