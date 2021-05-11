@@ -103,6 +103,20 @@ h3 {
     display: none;
 }
 
+.question-completed {
+    border: solid 2px #81C784;
+    display:none;
+    border-radius: 25px;
+    align-self: center;
+    text-align: center;
+    width: 70.5%;
+    padding: 12%;
+    margin: 1.5%;
+    font-size: 150%;
+    background:#81C784;
+    color: #81C784; 
+}
+
 /* ====================== */
 
 /* ================================ */

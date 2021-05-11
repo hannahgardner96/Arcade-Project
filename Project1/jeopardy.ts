@@ -15,11 +15,14 @@
         // DONE remove event listener from other cards
         // DONE add event listener to submit button (2.)
             // DONE on click take innerText of answer and compare to the return from the input (2.)
-            // if ===, add innerText of front (number) from score (3.)
-            // if !==, subtract innerText of front (number) from score (4.)
+            // DONE if ===, add innerText of front (number) from score (3.)
+            // DONE if !==, subtract innerText of front (number) from score (4.)
 // 5. 7. when all cards have been turned over, the player is alerted to their score and to the end of the game
     // make array of styles of every card. When array.every("none") === true, change display to more challenging questions
 // =============================================== //
+// CURRENT ISSUES
+// cannot click c2q2
+
 
 // ===== VARIABLES ===== //
 const cardFronts = Array.from(document.querySelectorAll(".question-card-front"))
@@ -42,7 +45,8 @@ const flipCard = (e) => { // changes card front display to none and card back di
 }
 
 const storePlayerInput = () => { // returns player input
-    let playerInput = submitText.value // used https://www.w3schools.com/jsref/prop_text_value.asp as a refresher 
+    let playerInput = submitText.value.toLowerCase() // used https://www.w3schools.com/jsref/prop_text_value.asp as a refresher 
+    submitText.value = ""
     return playerInput
 }
 
@@ -63,6 +67,18 @@ const decreaseScore = () => {
     const newScore = Number(children[0].innerText)
     score = score - newScore
     scoreh3.innerText = `Score: ${score}`
+}
+
+const setDisplayNone = (e) => {
+    const children = Array.from(currentCardParent.children) as HTMLDivElement[] 
+    children[1].style.display = "none"
+    children[3].style.display = "inline-block"
+}
+
+const checkCompletedDisplay = () => {
+    const completedDivs = Array.from(document.querySelectorAll(".question-completed"))
+    const arrayOfStyles = completedDivs.map(x => window.getComputedStyle(x).display)
+    return arrayOfStyles.every(x => x === "inline-block")
 }
 
 // ===== EVENT LISTENERS ===== //
@@ -88,6 +104,7 @@ const removeCardFrontListener = () => {
     })
 }
 
+
 //  *** submit button listener functions *** //
 const submitButtonListener = (e) => { 
     e.preventDefault() // without prevent default, it refreshes the page and clears the console
@@ -98,6 +115,11 @@ const submitButtonListener = (e) => {
     } else {
         decreaseScore()
     }
+    setDisplayNone(e)
+    if (checkCompletedDisplay()) {
+        alert(`You answered all the questions. Your score is ${score}`)
+    }
+    addCardFrontListener()
 }
 
 const addSubmitListener = () => {
