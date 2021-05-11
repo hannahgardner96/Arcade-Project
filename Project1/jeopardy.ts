@@ -26,9 +26,8 @@
 
 // ===== VARIABLES ===== //
 const cardFronts = Array.from(document.querySelectorAll(".question-card-front"))
-const cardBacks = Array.from(document.querySelectorAll(".question-card-back"))
-const cardAnswers = Array.from(document.querySelectorAll(".question-answer"))
 const submitButton = document.getElementById("submit-btn")
+const finalQuestion = document.getElementById("finalquestion")
 const submitText = document.querySelector("input[type='text']") as HTMLInputElement // referenced https://www.typescripttutorial.net/typescript-tutorial/type-casting/ for syntax
 const scoreh3: HTMLHeadElement = document.getElementById("score")
 
@@ -81,6 +80,46 @@ const checkCompletedDisplay = () => {
     return arrayOfStyles.every(x => x === "inline-block")
 }
 
+const flipFinalQuestion = () => {
+    const children = Array.from(finalQuestion.children) as HTMLDivElement[] 
+    children[0].style.display = "none"
+    children[1].style.display = "inline-block"
+}
+
+// Need help structuring promise
+const storeFinalInput = new Promise(() => {
+    let finalInput = submitText.value.toLowerCase
+    submitText.value = ""
+    return finalInput
+})
+
+const compareFinalInput = (input) => {
+    const children = Array.from(finalQuestion.children) as HTMLDivElement[]
+    return (input === children[2].innerText)
+}
+
+// const timeout = <output>(func: () => output, milliseconds: number) => new Promise<output>((resolve) => {
+//     setTimeout(() => {
+//         resolve(func())
+//     }, milliseconds)
+// })
+
+// where does asnc fit in here
+const runFinalQuestion = async (e) => {
+    flipFinalQuestion()
+    finalQuestion.removeEventListener("click", runFinalQuestion)
+    addSubmitListener()
+    e.preventDefault()
+    const input = await storeFinalInput()
+    if (compareFinalInput(input)) {
+        score = score + 100
+        scoreh3.innerText = `Score: ${score}`
+    } else {
+        score = score - 100
+        scoreh3.innerText = `Score: ${score}`
+    }
+}
+
 // ===== EVENT LISTENERS ===== //
 // *** event listeners dynamically added and removed throughout game. Initial listener below
 
@@ -117,7 +156,16 @@ const submitButtonListener = (e) => {
     }
     setDisplayNone(e)
     if (checkCompletedDisplay()) {
-        alert(`You answered all the questions. Your score is ${score}`)
+        alert("You have answered almost all of the questions... it's time for the final question! Click to flip when you are ready.")
+        finalQuestion.addEventListener("click", (e) => {
+            runFinalQuestion(e)
+            if (score >= 0) {
+                alert(`You win $${score}! Congratulations! Click OK to reload the page and play again.`)
+            window.location.reload()
+            } else {
+                alert(`Your score is $${score}. You lost. Click OK to reload the page and play again.`)
+            window.location.reload()
+        }})
     }
     addCardFrontListener()
 }
