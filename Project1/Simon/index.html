@@ -4,52 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snowman</title>
-    <link rel="stylesheet" href="project1bstyle.css">
-    <script src="project1b.js" charset="utf-8" defer></script>
+    <title>Simon Says</title>
+    <link rel="stylesheet" href="project1astyle.css">
+    <script src="project1a.js" charset="utf-8" defer></script>
+    <!-- <script src="node_modules/sweetalert/dist/sweetalert.min.js"></script> -->
 </head>
 <body>
-    <div class = "container" id = "intro">
-        <h1>Snowman</h1>
-        <p>Guess the word to build the snowman! Keep incorrect guesses under six.</p>
-    </div>
-    <div class = "container" id = "snowman-interface">
-        <img src = "https://gatewaylodge.com/wp-content/uploads/2018/01/SnowmanInTheForest.png" alt = "snowman" id = "snowman-img">
-        <div class = "container" id = "right-side">
-            <ul id = "secret-word">Reveal the hidden word:
-                <br>
-
-            </ul>
-            <button id = "start-button">START</button>
-            <h3 id = "remaining-guesses">Incorrect Guesses: </h3>
-            <div id = "alphabet-buttons-div">
-                <button class = "alphabet-buttons" id = "A">A</button>
-                <button class = "alphabet-buttons" id = "B">B</button>
-                <button class = "alphabet-buttons" id = "C">C</button>
-                <button class = "alphabet-buttons" id = "D">D</button>
-                <button class = "alphabet-buttons" id = "E">E</button>
-                <button class = "alphabet-buttons" id = "F">F</button>
-                <button class = "alphabet-buttons" id = "G">G</button>
-                <button class = "alphabet-buttons" id = "H">H</button>
-                <button class = "alphabet-buttons" id = "I">I</button>
-                <button class = "alphabet-buttons" id = "J">J</button>
-                <button class = "alphabet-buttons" id = "K">K</button>
-                <button class = "alphabet-buttons" id = "L">L</button>
-                <button class = "alphabet-buttons" id = "M">M</button>
-                <button class = "alphabet-buttons" id = "N">N</button>
-                <button class = "alphabet-buttons" id = "O">O</button>
-                <button class = "alphabet-buttons" id = "P">P</button>
-                <button class = "alphabet-buttons" id = "Q">Q</button>
-                <button class = "alphabet-buttons" id = "R">R</button>
-                <button class = "alphabet-buttons" id = "S">S</button>
-                <button class = "alphabet-buttons" id = "T">T</button>
-                <button class = "alphabet-buttons" id = "U">U</button>
-                <button class = "alphabet-buttons" id = "V">V</button>
-                <button class = "alphabet-buttons" id = "W">W</button>
-                <button class = "alphabet-buttons" id = "X">X</button>
-                <button class = "alphabet-buttons" id = "Y">Y</button>
-                <button class = "alphabet-buttons" id = "Z">Z</button>
+    <div id = "modal">
+        <div id = "modal-textbox">
+            <h1 id = "select-intro">Select your Avatar:</h1>
+            <div class = "select">
+                <img src= "https://dogtime.com/assets/uploads/2018/10/puppies-cover.jpg" alt="Puppy" class="modal-avatar" id = "modal-puppy">
+                <button id = "puppy-button">PUPPY</button>
             </div>
+            <div class = "select">
+                <img src= "https://projects-static.raspberrypi.org/projects/rainbow-predictor/9c307d2af61c6445726b1691fb4eacc04716206b/en/images/rainbow-predictor.png" alt="Rainbow" class="modal-avatar" id = "modal-rainbow">
+                <button id = "rainbow-button">RAINBOW</button>
+            </div>
+            <div class = "select">
+                <img src= "https://cdn.dribbble.com/users/26684/screenshots/14184643/media/e5cfdb1ae2b3bd5a919db2e62ee61dcc.png?compress=1&resize=400x300" alt="French fry" class="modal-avatar" id = "modal-french-fry">
+                <button id = "french-fry-button">FRENCH FRY</button>
+            </div>
+        </div>
+    </div>
+    <!-- <audio id="sounds" loop= "false" volume = "60">
+        <source src="sounds/clap.wav" id="A" type="audio/wav">
+        <source src="sounds/boom.wav" id="S" type="audio/wav">
+        <source src="sounds/hihat.wav" id="D" type="audio/wav">
+        <source src="sounds/kick.wav" id="F" type="audio/wav">
+        <source src="sounds/snare.wav" id="G" type="audio/wav">
+        <source src="sounds/ride.wav" id="H" type="audio/wav">
+        <source src="sounds/tom.wav" id="J" type="audio/wav">
+      </audio> formatting from https://stackoverflow.com/questions/51572489/playing-sound-on-click-event-with-pure-javascript/51572658 -->
+    <div class = "container" id = "intro">
+        <h1>Simon Says</h1>
+        <ul>
+            <li class = "instructions">Click "start" to begin the game.</li>
+            <li class = "instructions">Simon will flash a pattern on the buttons.</li> 
+            <li>Press the buttons in the same order.</li>
+        </ul>
+    </div>
+    <div class = "container" id = "simon-interface">
+        <div class = "column">
+            <div class = "simon-button" id = "green"></div>
+            <div class = "simon-button" id = "red"></div>
+        </div>
+        <div class = "column">
+            <div class = "simon-button" id = "yellow"></div>
+            <div class = "simon-button" id = "blue"></div>
+        </div>
+    </div>
+    <div class = "container" id = "initialize-and-results">
+        <button id = "start-button">START</button>
+        <h4 class = "results" id = "simon-results"></h4>
+        <h4 class = "results" id = "player-results"></h4>
+        <div id = "score">
+            <img src= "https://dogtime.com/assets/uploads/2018/10/puppies-cover.jpg" alt="Puppy" class="avatar" id = "puppy">
+            <img src= "https://projects-static.raspberrypi.org/projects/rainbow-predictor/9c307d2af61c6445726b1691fb4eacc04716206b/en/images/rainbow-predictor.png" alt="Rainbow" class="avatar" id = "rainbow">
+            <img src= "https://cdn.dribbble.com/users/26684/screenshots/14184643/media/e5cfdb1ae2b3bd5a919db2e62ee61dcc.png?compress=1&resize=400x300" alt="French fry" class="avatar" id = "french-fry">
+            
+            <h2 id = "score-label">Score:</h2>
+            <h2 id = "score-value"></h2>
         </div>
     </div>
 </body>
