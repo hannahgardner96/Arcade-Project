@@ -13,8 +13,8 @@
 // event listener on questions && 2. player enters answer into input box. && 3. if the answer is correct, the innerText (a number) from the front of the card is added to their score. && . if the answer is incorrect, the innerText (a number) from the front of the card is subtracted from their score.
 // DONE onclick, display of card front is changed from inline-block to none and display of card back is changed to inline-block (1.)
 // DONE remove event listener from other cards
-// add event listener to submit button (2.)
-// on click take innerText of answer and compare to the return from the input (2.)
+// DONE add event listener to submit button (2.)
+// DONE on click take innerText of answer and compare to the return from the input (2.)
 // if ===, add innerText of front (number) from score (3.)
 // if !==, subtract innerText of front (number) from score (4.)
 // 5. 7. when all cards have been turned over, the player is alerted to their score and to the end of the game
@@ -26,6 +26,8 @@ const cardBacks = Array.from(document.querySelectorAll(".question-card-back"));
 const cardAnswers = Array.from(document.querySelectorAll(".question-answer"));
 const submitButton = document.getElementById("submit-btn");
 const submitText = document.querySelector("input[type='text']"); // referenced https://www.typescripttutorial.net/typescript-tutorial/type-casting/ for syntax
+const scoreh3 = document.getElementById("score");
+let score = 0;
 let currentCardParent;
 // ===== FUNCTIONS ===== //
 const flipCard = (e) => {
@@ -42,6 +44,18 @@ const comparePlayerInput = (input) => {
     const children = Array.from(currentCardParent.children);
     return (input === children[2].innerText);
 };
+const increaseScore = () => {
+    const children = Array.from(currentCardParent.children);
+    const newScore = Number(children[0].innerText);
+    score = score + newScore;
+    scoreh3.innerText = `Score: ${score}`;
+};
+const decreaseScore = () => {
+    const children = Array.from(currentCardParent.children);
+    const newScore = Number(children[0].innerText);
+    score = score - newScore;
+    scoreh3.innerText = `Score: ${score}`;
+};
 // ===== EVENT LISTENERS ===== //
 // *** event listeners dynamically added and removed throughout game. Initial listener below
 // *** card front listener functions *** //
@@ -50,19 +64,27 @@ const cardFrontListener = (e) => {
     removeCardFrontListener();
     addSubmitListener();
 };
-cardFronts.forEach(card => {
-    card.addEventListener("click", cardFrontListener);
-});
+const addCardFrontListener = () => {
+    cardFronts.forEach(card => {
+        card.addEventListener("click", cardFrontListener);
+    });
+};
 const removeCardFrontListener = () => {
     cardFronts.forEach(card => {
         card.removeEventListener("click", cardFrontListener);
     });
 };
 //  *** submit button listener functions *** //
-const submitButtonListener = () => {
+const submitButtonListener = (e) => {
+    e.preventDefault(); // without prevent default, it refreshes the page and clears the console
     let input = storePlayerInput();
     removeSubmitListener();
-    console.log(comparePlayerInput(input));
+    if (comparePlayerInput(input)) {
+        increaseScore();
+    }
+    else {
+        decreaseScore();
+    }
 };
 const addSubmitListener = () => {
     submitText.focus(); // suggestion from someone w experience
@@ -71,4 +93,4 @@ const addSubmitListener = () => {
 const removeSubmitListener = () => {
     submitButton.removeEventListener("click", submitButtonListener);
 };
-// addCardFrontListener()
+addCardFrontListener();
