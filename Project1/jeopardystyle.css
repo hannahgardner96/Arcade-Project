@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+html {
+    padding: 5%;
+    background:#4DD0E1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: solid 4px white;
+    border-radius: 25px;
+    background: #4FC3F7;
+    font-family: 'Roboto Mono', monospace;
+    color: white;
+}
+
+h1, h4 {
+    text-align: center;
+    padding: 0.5%;
+    margin: 1%;
+}
+
+/* ===================== */
+/* Answer Input Styling */
+form {
+    align-self: center;
+}
+
+input {
+    height: 10%;
+    font-family: 'Roboto Mono', monospace;
+    border-radius: 25px;
+    border: solid 2px #DCE775;
+}
+
+#submit-btn {
+    background: #4DB6AC;
+    color: white;
+}
+
+/* ===================== */
+
+
+/* ====================== */
+/* Question Board Styling */
+
+h3 {
+    text-align: center;
+}
+
+#question-board {
+    display: inline-flex;
+    justify-content: center;
+    border: solid 2px white;
+    border-radius: 25px;
+    background: #4DB6AC;
+    margin: 1%;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: solid 2px white;
+    border-radius: 25px;
+    width: 18%;
+    margin: 1%;
+    padding: 0.5%;
+    background: #81C784;
+}
+
+.question-card-front {
+    border: solid 2px white;
+    display:inline-block;
+    border-radius: 25px;
+    align-self: center;
+    text-align: center;
+    width: 70.5%;
+    padding: 12%;
+    margin: 1.5%;
+    font-size: 150%;
+    cursor: pointer;
+    background:#AED581; 
+}
+
+.question-card-back {
+    display: none;
+    border: solid 2px white;
+    border-radius: 25px;
+    align-self: center;
+    text-align: center;
+    width: 70.5%;
+    padding: 12%;
+    margin: 1.5%;
+    font-size: 150%;
+    background:white; 
+    color: #4DB6AC;
+}
+
+.question-answer {
+    display: none;
+}
+
+/* ====================== */
+
+/* ================================ */
+/* Final Question and Score Styling */
+
+#finalq-score {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: none;
+}
+
+#finalquestion {
+    align-self: center;
+    white-space: nowrap;
+    width: 95%;
+    height: 10%;
+}
+
+#finalfront {
+    padding: 1%;
+    width: 95%;
+    background: #DCE775;
+}
+
+#finalback {
+    padding: 1%;
+    width: 95%;
+    background: #DCE775;
+}
+
+#score {
+    align-self: center;
+}
+
+/* ================================ */

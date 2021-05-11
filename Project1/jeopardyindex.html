@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy</title>
+    <link rel="stylesheet" href="jeopardystyle.css">
+    <script src="jeopardy.js" charset="utf-8" defer></script>
+</head>
+<body>
+    <h1>Jeopardy</h1>
+    <h4>Click on a question to begin the game. Enter your answer in the box below.</h4>
+    <form>
+        <input type = "text" id = "player-answer"/>
+        <input type="submit" name="Submit" id = "submit-btn"/>
+    </form>
+<!-- QUESTION DIFFICULTY LEVEL 1 -->
+    <div class = "container" id = "question-board">
+
+<!-- QUESTION CATEGORY 1 -->
+        <div class = "categories" id = "category1">
+            <h3>Category 1</h3>
+            <div class = "question" id = "cat1-quest1">
+                <div class = "question-card-front" id = "c1q1front">10</div>
+                <div class = "question-card-back" id = "c1q1back">clue here</div>
+                <div class = "question-answer" id = "c1q1answer">answer</div>
+            </div>
+            <div class = "question" id = "cat1-quest2">
+                <div class = "question-card-front" id = "c1q2front">20</div>
+                <div class = "question-card-back" id = "c1q2back">clue here</div>
+                <div class = "question-answer" id = "c1q2answer">answer</div>
+            </div>
+            <div class = "question" id = "cat1-quest3">
+                <div class = "question-card-front" id = "c1q3front">30</div>
+                <div class = "question-card-back" id = "c1q3back">clue here</div>
+                <div class = "question-answer" id = "c1q3answer">answer</div>
+            </div>
+            <div class = "question" id = "cat1-quest4">
+                <div class = "question-card-front" id = "c1q4front">40</div>
+                <div class = "question-card-back" id = "c1q4back">clue here</div><div class = "question-answer" id = "c1q4answer">answer</div>
+            </div>
+            <div class = "question" id = "cat1-quest5">
+                <div class = "question-card-front" id = "c1q5front">50</div>
+                <div class = "question-card-back" id = "c1q5back">clue here</div>
+                <div class = "question-answer" id = "c1q5answer">answer</div>
+            </div>
+        </div>
+
+<!-- QUESTION CATEGORY 2 -->
+        <div class = "categories" id = "category2">
+            <h3>Category 2</h3>
+            <div class = "question" id = "cat2-quest1">
+                <div class = "question-card-front" id = "c2q1front">10</div>
+                <div class = "question-card-back" id = "c2q1back">clue here</div>
+                <div class = "question-answer" id = "c2q1answer">answer</div>
+            </div>
+            <div class = "question" id = "cat1-quest2">
+                <div class = "question-card-front" id = "c2q2front">20</div>
+                <div class = "question-card-back" id = "c2q2back">clue here</div>
+                <div class = "question-answer" id = "c2q2answer">answer</div>
+            </div>
+            <div class = "question" id = "cat2-quest3">
+                <div class = "question-card-front" id = "c2q3front">30</div>
+                <div class = "question-card-back" id = "c2q3back">clue here</div>
+                <div class = "question-answer" id = "c2q3answer">answer</div>
+            </div>
+            <div class = "question" id = "cat2-quest4">
+                <div class = "question-card-front" id = "c2q4front">40</div>
+                <div class = "question-card-back" id = "c2q4back">clue here</div>
+                <div class = "question-answer" id = "c2q4answer">answer</div>
+            </div>
+            <div class = "question" id = "cat2-quest5">
+                <div class = "question-card-front" id = "c2q5front">50</div>
+                <div class = "question-card-back" id = "c2q5back">clue here</div>
+                <div class = "question-answer" id = "c2q5answer">answer</div>
+            </div>
+        </div>
+
+<!-- QUESTION CATEGORY 3 -->
+        <div class = "categories" id = "category3">
+            <h3>Category 3</h3>
+            <div class = "question" id = "cat3-quest1">
+                <div class = "question-card-front" id = "c3q1front">10</div>
+                <div class = "question-card-back" id = "c3q1back">clue here</div>
+                <div class = "question-answer" id = "c3q1answer">answer</div>
+            </div>
+            <div class = "question" id = "cat3-quest2">
+                <div class = "question-card-front" id = "c3q2front">20</div>
+                <div class = "question-card-back" id = "c3q2back">clue here</div>
+                <div class = "question-answer" id = "c3q2answer">answer</div>
+            </div>
+            <div class = "question" id = "cat3-quest3">
+                <div class = "question-card-front" id = "c3q3front">30</div>
+                <div class = "question-card-back" id = "c3q3back">clue here</div>
+                <div class = "question-answer" id = "c3q3answer">answer</div>
+            </div>
+            <div class = "question" id = "cat3-quest4">
+                <div class = "question-card-front" id = "c3q4front">40</div>
+                <div class = "question-card-back" id = "c3q4back">clue here</div>
+                <div class = "question-answer" id = "c3q4answer">answer</div>
+            </div>
+            <div class = "question" id = "cat3-quest5">
+                <div class = "question-card-front" id = "c3q5front">50</div>
+                <div class = "question-card-back" id = "c3q5back">clue here</div>
+                <div class = "question-answer" id = "c3q5answer">answer</div>
+            </div>
+        </div>
+
+<!-- QUESTION CATEGORY 4 -->
+        <div class = "categories" id = "category4">
+            <h3>Category 4</h3>
+            <div class = "question" id = "cat4-quest1">
+                <div class = "question-card-front" id = "c4q1front">10</div>
+                <div class = "question-card-back" id = "c4q1back">clue here</div>
+                <div class = "question-answer" id = "c4q1answer">answer</div>
+            </div>
+            <div class = "question" id = "cat4-quest2">
+                <div class = "question-card-front" id = "c4q2front">20</div>
+                <div class = "question-card-back" id = "c4q2back">clue here</div>
+                <div class = "question-answer" id = "c4q2answer">answer</div>
+            </div>
+            <div class = "question" id = "cat4-quest3">
+                <div class = "question-card-front" id = "c4q3front">30</div>
+                <div class = "question-card-back" id = "c4q3back">clue here</div>
+                <div class = "question-answer" id = "c4q3answer">answer</div>
+            </div>
+            <div class = "question" id = "cat4-quest4">
+                <div class = "question-card-front" id = "c4q4front">40</div>
+                <div class = "question-card-back" id = "c4q4back">clue here</div>
+                <div class = "question-answer" id = "c4q4answer">answer</div>
+            </div>
+            <div class = "question" id = "cat4-quest5">
+                <div class = "question-card-front" id = "c4q5front">50</div>
+                <div class = "question-card-back" id = "c4q5back">clue here</div>
+                <div class = "question-answer" id = "c4q5answer">answer</div>
+            </div>
+        </div>
+
+<!-- QUESTION CATEGORY 5 -->
+        <div class = "categories" id = "category5">
+            <h3>Category 5</h3>
+            <div class = "question" id = "cat5-quest1">
+                <div class = "question-card-front" id = "c5q1front">10</div>
+                <div class = "question-card-back" id = "c5q1back">clue here</div>
+                <div class = "question-answer" id = "c5q1answer">answer</div>
+            </div>
+            <div class = "question" id = "cat5-quest2">
+                <div class = "question-card-front" id = "c5q2front">20</div>
+                <div class = "question-card-back" id = "c5q2back">clue here</div>
+                <div class = "question-answer" id = "c5q2answer">answer</div>
+            </div>
+            <div class = "question" id = "cat5-quest3">
+                <div class = "question-card-front" id = "c5q3front">30</div>
+                <div class = "question-card-back" id = "c5q3back">clue here</div>
+                <div class = "question-answer" id = "c5q3answer">answer</div>
+            </div>
+            <div class = "question" id = "cat5-quest4">
+                <div class = "question-card-front" id = "c5q4front">40</div>
+                <div class = "question-card-back" id = "c5q4back">clue here</div>
+                <div class = "question-answer" id = "c5q4answer">answer</div>
+            </div>
+            <div class = "question" id = "cat5-quest5">
+                <div class = "question-card-front" id = "c5q5front">50</div>
+                <div class = "question-card-back" id = "c5q5back">clue here</div>
+                <div class = "question-answer" id = "c5q5answer">answer</div>
+            </div>
+        </div>
+    </div>
+
+<!-- FINAL QUESTION AND SCORE -->
+    <div class = "container" id = "finalq-score">
+        <div class = "question" id = "finalquestion">
+            <div class = "question-card-front" id = "finalfront">Final Question</div>
+            <div class = "question-card-back" id = "finalback">clue here</div>
+            <div class = "question-answer" id = "finalanswer">answer</div>
+        </div>
+        <div id = "score">
+            <h3>Score: </h3>
+        </div>
+    </div>
+</body>
+</html>
