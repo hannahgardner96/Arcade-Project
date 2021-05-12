@@ -8,7 +8,7 @@
 // ===== JS/TS GOALS ===== //
 // player1Color = #F06292
 // player2Color = #4DD0E1
-// clicks = 1
+// clicks = 0
 // array of squares.child (circles in squares) for each column
 // DONE add event listener to each column
 // DONE onclick, increment clicks 
@@ -20,18 +20,18 @@
 // if (win === false)
 // #declare-turn.innerText = "Player 1, select a row and place your tile."
 // ===== VARIABLES ===== //
-const player1Color = "#F06292";
-const player2Color = "#4DD0E1";
+const player1Color = "rgb(240, 98, 146)";
+const player2Color = "rgb(77, 208, 225)";
 let clicks = 0;
 // * column arrays * //
 const columnDivs = Array.from(document.querySelectorAll(".column"));
-const column1Squares = Array.from(document.getElementById("column1").childNodes);
-const column2Squares = Array.from(document.getElementById("column2").childNodes);
-const column3Squares = Array.from(document.getElementById("column3").childNodes);
-const column4Squares = Array.from(document.getElementById("column4").childNodes);
-const column5Squares = Array.from(document.getElementById("column5").childNodes);
-const column6Squares = Array.from(document.getElementById("column6").childNodes);
-const column7Squares = Array.from(document.getElementById("column7").childNodes);
+const column1Squares = Array.from(document.getElementById("column1").children);
+const column2Squares = Array.from(document.getElementById("column2").children);
+const column3Squares = Array.from(document.getElementById("column3").children);
+const column4Squares = Array.from(document.getElementById("column4").children);
+const column5Squares = Array.from(document.getElementById("column5").children);
+const column6Squares = Array.from(document.getElementById("column6").children);
+const column7Squares = Array.from(document.getElementById("column7").children);
 // ===== FUNCTIONS ===== //
 const increaseClicks = () => {
     clicks = clicks + 1;
@@ -54,7 +54,31 @@ const declareTurn = (nextPlayer) => {
         declareTurnH3.style.color = player2Color;
     }
 };
-const checkWin = () => {
+const checkPlayerPresence = (column, index) => {
+    const circleToCheck = Array.from(column[index].children);
+    let color = window.getComputedStyle(circleToCheck[0]).backgroundColor;
+    if (color === player1Color) {
+        return "player1";
+    }
+    else if (color === player2Color) {
+        return "player2";
+    }
+    else {
+        return "empty";
+    }
+};
+const checkWin = (e) => {
+    // start with a function that takes a column and a row and tells you the player (AKA bgrnd color)
+    // check if there are spaces 4 below, 4 to the right, 4 to the left
+    // if not check if there are spaces 3 below
+    // let index = the first index of the current column that is available
+    // VERTICLE WIN if currentColumn[index].bgrnd === currentColumn[index-1].bgrnd && currentColumn[index-1].bgrnd === currentColumn[index-2].bgrnd && currentColumn[index-2].bgrnd === currentColumn[index-3].bgrnd && currentColumn[index-3].bgrnd === currentColumn[index-4].bgrnd => win!
+    // HORIZONTAL WIN if currentColumn[index].bgrnd === currentColumn+1[index].bgrnd && currentColumn+1[index].bgrnd === currentColumn+2[index].bgrnd etc...
+    // OR
+    // if currentColumn[index].bgrnd === currentColumn-1[index].bgrnd && currentColumn-1[index].bgrnd === currentColumn-2[index].bgrnd etc...
+    // OR
+    // if currentColumn[index].bgrnd === currentColumn+1[index].bgrnd && currentColumn[index].bgrnd === currentColumn-1[index].bgrnd etc...
+    // DIAGONAL WIN if currentColumn[index].bgrnd === currentColumn+1[index+1].bgrnd && currentColumn[index].bgrnd === currentColumn-1[index-1].bgrnd
 };
 // ===== EVENT LISTENERS ===== //
 const columnListener = (e) => {
@@ -64,23 +88,21 @@ const columnListener = (e) => {
     const selectedCircle = availableSpaces[0].children[0];
     if (clicks % 2 !== 0) { // it is player 1's turn is the clicks are odd
         selectedCircle.style.backgroundColor = player1Color;
-        if (checkWin()) {
-            alert("Player 1 is the winner!");
-        }
-        else {
-            declareTurn("Player 2");
-        }
+        // if (checkWin(e)) {
+        //     alert("Player 1 is the winner!")
+        // } else {
+        declareTurn("Player 2");
+        // }
     }
     else { // it is player 2's turn if the clicks are even
         selectedCircle.style.backgroundColor = player2Color;
-        if (checkWin()) {
-            alert("Player 1 is the winner!");
-        }
-        else {
-            declareTurn("Player 1");
-        }
+        //     if (checkWin(e)) {
+        //         alert("Player 1 is the winner!")
+        //     } else {
+        declareTurn("Player 1");
     }
-    columnDivs.forEach(column => {
-        column.addEventListener("click", columnListener);
-    });
 };
+columnDivs.forEach(column => {
+    column.addEventListener("click", columnListener);
+});
+console.log(checkPlayerPresence(column1Squares, 0));
