@@ -70,10 +70,10 @@ const checkPlayerPresence = (column, index) => {
         return "empty";
     }
 };
-const checkVerticleWin = (column, div) => {
+const checkVerticalWin = (column, div) => {
     let index = column.indexOf(column.find(square => square === div)); // referenced https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find as refresher 
     if (column[index - 3] !== undefined && declareColor(column, index) === declareColor(column, index - 1) && declareColor(column, index - 1) === declareColor(column, index - 2) && declareColor(column, index - 2) === declareColor(column, index - 3)) {
-        alert("win condition works");
+        alert("vertical win condition works");
     }
 };
 // const checkWin = (e) => {
@@ -110,7 +110,7 @@ const columnListener = (e) => {
         //     } else {
         declareTurn("Player 1");
     }
-    checkVerticleWin(currentColumn, availableSpaces[0]);
+    checkVerticalWin(currentColumn, availableSpaces[0]);
 };
 columnDivs.forEach(column => {
     column.addEventListener("click", columnListener);
