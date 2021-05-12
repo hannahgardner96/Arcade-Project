@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Rajdhani&display=swap');
 
 html {
     background: #BA68C8;
@@ -8,7 +8,7 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    font-family: 'Itim', cursive;
+    font-family: 'Rajdhani', sans-serif;
 }
 
 #intro {
@@ -24,6 +24,7 @@ body {
     padding-left: 2em;
     margin: 0;
     align-self: center;
+    font-size: large;
 }
 
 #player1 {
@@ -67,11 +68,12 @@ body {
 /* circles */
 .circle {
    border-radius: 50%; 
-   border: solid 2px white;
+   border: solid 3px white;
    background: #BA68C8;
    height: 6em;
    width: 6em;
    align-self: center;
+   cursor: pointer;
 }
 /* used  https://www.w3schools.com/howto/howto_css_circles.asp as reference to make curcle */
 
