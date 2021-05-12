@@ -30,7 +30,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // make array of styles of every card. When array.every("none") === true, change display to more challenging questions
 // =============================================== //
 // CURRENT ISSUES
-// cannot click c2q2
+// turn of final q listener
 // ===== VARIABLES ===== //
 const cardFronts = Array.from(document.querySelectorAll(".question-card-front"));
 const submitButton = document.getElementById("submit-btn");
@@ -83,11 +83,11 @@ const flipFinalQuestion = () => {
     children[1].style.display = "inline-block";
 };
 // Need help structuring promise
-const storeFinalInput = new Promise(() => {
+const storeFinalInput = () => {
     let finalInput = submitText.value.toLowerCase;
     submitText.value = "";
     return finalInput;
-});
+};
 const compareFinalInput = (input) => {
     const children = Array.from(finalQuestion.children);
     return (input === children[2].innerText);
@@ -101,9 +101,15 @@ const compareFinalInput = (input) => {
 const runFinalQuestion = (e) => __awaiter(void 0, void 0, void 0, function* () {
     flipFinalQuestion();
     finalQuestion.removeEventListener("click", runFinalQuestion);
-    addSubmitListener();
-    e.preventDefault();
-    const input = yield storeFinalInput();
+    yield new Promise(resolve => {
+        const promiseListener = (e) => {
+            e.preventDefault();
+            submitButton.removeEventListener("click", promiseListener);
+            resolve(null); // not returning any concrete information, so null
+        };
+        submitButton.addEventListener("click", promiseListener); // this adds the lsitener and by callin it, it removes the listener 
+    });
+    const input = storeFinalInput();
     if (compareFinalInput(input)) {
         score = score + 100;
         scoreh3.innerText = `Score: ${score}`;
@@ -145,8 +151,8 @@ const submitButtonListener = (e) => {
     setDisplayNone(e);
     if (checkCompletedDisplay()) {
         alert("You have answered almost all of the questions... it's time for the final question! Click to flip when you are ready.");
-        finalQuestion.addEventListener("click", (e) => {
-            runFinalQuestion(e);
+        finalQuestion.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, function* () {
+            yield runFinalQuestion(e); // this is an async function because it contains a promise that needs to complete before this conditional can run successfully
             if (score >= 0) {
                 alert(`You win $${score}! Congratulations! Click OK to reload the page and play again.`);
                 window.location.reload();
@@ -155,7 +161,8 @@ const submitButtonListener = (e) => {
                 alert(`Your score is $${score}. You lost. Click OK to reload the page and play again.`);
                 window.location.reload();
             }
-        });
+        }));
+        return; // this return stops the final addCardFrontListener() from being called
     }
     addCardFrontListener();
 };

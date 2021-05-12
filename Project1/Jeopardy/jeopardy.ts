@@ -21,7 +21,7 @@
     // make array of styles of every card. When array.every("none") === true, change display to more challenging questions
 // =============================================== //
 // CURRENT ISSUES
-// cannot click c2q2
+// turn of final q listener
 
 
 // ===== VARIABLES ===== //
@@ -87,11 +87,11 @@ const flipFinalQuestion = () => {
 }
 
 // Need help structuring promise
-const storeFinalInput = new Promise(() => {
+const storeFinalInput = () => {
     let finalInput = submitText.value.toLowerCase
     submitText.value = ""
     return finalInput
-})
+}
 
 const compareFinalInput = (input) => {
     const children = Array.from(finalQuestion.children) as HTMLDivElement[]
@@ -108,9 +108,15 @@ const compareFinalInput = (input) => {
 const runFinalQuestion = async (e) => {
     flipFinalQuestion()
     finalQuestion.removeEventListener("click", runFinalQuestion)
-    addSubmitListener()
-    e.preventDefault()
-    const input = await storeFinalInput()
+    await new Promise(resolve => { //we are creating a new promise here because we need to promise that some information will return and wait for it to be obtained before moving on. 
+        const promiseListener = (e) => { // need to store this listener in a variable for similar reasons as those stored in the event listener section. To be able to remove it, it must be stored in a variable.
+            e.preventDefault()
+            submitButton.removeEventListener("click", promiseListener)
+            resolve(null) // not returning any concrete information, so null
+        }
+        submitButton.addEventListener("click", promiseListener) // this adds the lsitener and by callin it, it removes the listener 
+    })
+    const input = storeFinalInput()
     if (compareFinalInput(input)) {
         score = score + 100
         scoreh3.innerText = `Score: ${score}`
@@ -157,15 +163,16 @@ const submitButtonListener = (e) => {
     setDisplayNone(e)
     if (checkCompletedDisplay()) {
         alert("You have answered almost all of the questions... it's time for the final question! Click to flip when you are ready.")
-        finalQuestion.addEventListener("click", (e) => {
-            runFinalQuestion(e)
+        finalQuestion.addEventListener("click", async (e) => {
+            await runFinalQuestion(e) // this is an async function because it contains a promise that needs to complete before this conditional can run successfully
             if (score >= 0) {
                 alert(`You win $${score}! Congratulations! Click OK to reload the page and play again.`)
-            window.location.reload()
+                window.location.reload()
             } else {
                 alert(`Your score is $${score}. You lost. Click OK to reload the page and play again.`)
-            window.location.reload()
+                window.location.reload()
         }})
+        return // this return stops the final addCardFrontListener() from being called
     }
     addCardFrontListener()
 }
