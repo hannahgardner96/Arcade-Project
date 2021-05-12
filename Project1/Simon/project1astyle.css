@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@100;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 
 html {
-    background-color: #191970;
+    background-color: #9E9D24;
     display: table;
     margin: auto;
     width: 80%;
@@ -15,7 +13,8 @@ body {
     height: 100%;
     display: table-cell;
     vertical-align: middle;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto Mono', monospace;
+    color: white;
 }
 
 div {
@@ -32,10 +31,12 @@ li {
     margin: 0.1em;
     font-size: 0.7em;
     list-style: none;
+    color: white;
 }
 
 .container {
-    background-color: #E6E6FA;
+    background-color: #AFB42B;
+    box-shadow: 3px 3px 6px white;
 }
 
 img {
@@ -46,13 +47,14 @@ img {
     justify-content: center;
     align-items: baseline;
     border-radius: 25px;
-    border: solid 5px #191970;
+    border: solid 5px #D4E157;
+    box-shadow: 2px 2px 4px white;
 }
 
 /* ===== STYLING OF MODAL ===== */
 /* copied from modal morning excercise on w03d04 */
 #modal {
-	background-color:#FFB6C1;
+	background-color:#C0CA33 ;
 	position: fixed;
     margin-top: 10%;
     margin-left: 15%;
@@ -65,8 +67,8 @@ img {
 	display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 10px #00CED1;
-    box-shadow: 4px 4px 8px #000000;
+    border: solid 6px white;
+    box-shadow: 3px 3px 6px white;
 }
 
 #modalTextbox {
@@ -97,25 +99,29 @@ img {
 
 #puppy-button, #rainbow-button, #french-fry-button {
     width: 90%;
+    color: white;
+    background-color: #CDDC39;
+    border-color: white;
 }
 
 /* ===== STYLING OF INTRO ===== */
 #intro {
     margin: 0.5em;
     padding-bottom: 1em;
+    border: solid 4px white;
 }
 
 h1 {
     margin: 0.1em;
     padding: 0.01em; 
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     font-weight: 500;
     font-size: 4em;
-    color: #FA8072;
+    color: white;
 }
 
 p {
-    color: #191970;
+    color: #FF7043;
 }
 
 
@@ -123,11 +129,12 @@ p {
 #simon-interface {
     width: 98%;
     height: 17em;
-    background-color: #E6E6FA;
+    background-color: #AFB42B ;
     display: inline-flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: solid 4px white;
 }
 
 .column {
@@ -138,7 +145,8 @@ p {
     height:100px;
     width: 100px;
     border-radius: 10%;
-    box-shadow: 2px 2px 4px #000000;
+    border: solid 1px white;
+    box-shadow: 2px 2px 4px white;
     /* used https://www.w3schools.com/cssref/css3_pr_box-shadow.asp for ^^^^^ */
     cursor: pointer;
 }
@@ -163,18 +171,22 @@ p {
 
 /* ===== STYLING OF INITIALIZE, RESULTS, AND SCORING ===== */
 
+#initialize-and-results {
+    border: solid 4px white;
+}
+
 button {
     margin: 0.5em;
     margin-top: 1.5em;
     height: 3em;
     width: 5em;
-    font-family: 'Poppins', sans-serif;
-    color: #E6E6FA;
-    background-color: #FA8072;
+    font-family: 'Roboto Mono', monospace;
     border-radius: 10%;
-    border-color: #E6E6FA;
-    box-shadow: 2px 2px 4px #000000;
+    box-shadow: 2px 2px 4px white;
     cursor: pointer;
+    color: white;
+    background-color: #CDDC39;
+    border-color: white;
 }
 
 h4 {
@@ -184,26 +196,31 @@ h4 {
 #score {
     display: inline-flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    color: white;
+    background-color: #C0CA33;
+    box-shadow: 2px 2px 4px white;
 }
 
 h2 {
     text-align: center;
-    color: #191970;
+    color: color;
     height: 100%;
     padding: 1em;
     margin: 0.25em;
-    background-color: #E6E6FA;
+    background-color: #AFB42B ;
     display: inline-flex;
     justify-content: center;
     align-items: baseline;
     border-radius: 25px;
+    box-shadow: 2px 2px 4px white;
 }
 
 #score-value {
     height: 15%;
     width: 25%;
-    background-color: #FFD700;
+    background-color: #AFB42B ;
+    color: white;
 }
 
 .avatar {
@@ -214,20 +231,18 @@ h2 {
     justify-content: center;
     align-items: baseline;
     border-radius: 25px;
-    border: solid 5px #FA8072; 
+    border: solid 5px #D4E157;
+    box-shadow: 2px 2px 4px white;
 }
 
 #puppy {
     display: none;
-    border-color: solid 5px #FA8072; 
 }
 
 #rainbow {
     display: none;
-    border-color: #191970;
 }
 
 #french-fry {
     display: none; 
-    border-color: #FFD700;
 }
