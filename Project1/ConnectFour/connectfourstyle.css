@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+html {
+    background: #BA68C8;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Itim', cursive;
+}
+
+#intro {
+    text-align:center;
+    color: white;
+    display: inline-flex;
+    justify-content: center;
+    align-content: baseline;
+}
+
+#introtext {
+    padding-right: 2em;
+    padding-left: 2em;
+    margin: 0;
+    align-self: center;
+}
+
+#player1 {
+    background: #F06292;
+}
+
+#player2 {
+    background: #4DD0E1;
+}
+
+/* ===== MAIN BOARD STYLING ===== */
+#board {
+    border: solid 4px white;
+    background: #9575CD;
+    border-radius: 25px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+/* columns */
+
+.column {
+    border: solid 2px #7986CB;
+    height: 40em;
+    width: 10em;
+    display:inline-flex;
+    flex-direction: column-reverse;
+    justify-content: stretch;
+}
+
+/* squares */
+.square {
+    border: solid 2px #7986CB;
+    height: 7em;
+    background: #64B5F6;
+    display: flex;
+    justify-content: center;
+}
+
+/* circles */
+.circle {
+   border-radius: 50%; 
+   border: solid 2px white;
+   background: #BA68C8;
+   height: 6em;
+   width: 6em;
+   align-self: center;
+}
+/* used  https://www.w3schools.com/howto/howto_css_circles.asp as reference to make curcle */
+
+@media (max-width: 500px) {
+
+}
