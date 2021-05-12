@@ -12,11 +12,11 @@
 // array of squares.child (circles in squares) for each column
 // DONE add event listener to each column
     // DONE onclick, increment clicks 
-    // if circles[0] background = #BA68C8, change background color, else increment index and check again
-        // if clicks%2 !== 0, style.background = player1Color
+    // DONE if circles[0] background = #BA68C8, change background color, else increment index and check again
+        // DONE if clicks%2 !== 0, style.background = player1Color
             // if (win === false)
                 // #declare-turn.innerText = "Player 2, select a row and place your tile."
-        // if clicks%2 === 0, style.background = player2Color
+        // DONE if clicks%2 === 0, style.background = player2Color
             // if (win === false)
                 // #declare-turn.innerText = "Player 1, select a row and place your tile."
 
@@ -58,6 +58,11 @@ const checkAvailability = (square: HTMLDivElement) => { // checks the background
     return (window.getComputedStyle(circleToCheck[0]).backgroundColor === "rgb(186, 104, 200)")
 }
 
+const declareTurn = (nextPlayer: string) => {
+    const declareTurnH3 = document.getElementById("declare-turn")
+    declareTurnH3.innerText = `${nextPlayer}, select a row and place your tile.`
+}
+
 // ===== EVENT LISTENERS ===== //
 const columnListener = (e) => {
     increaseClicks()
@@ -66,8 +71,10 @@ const columnListener = (e) => {
     const selectedCircle = availableSpaces[0].children[0] as HTMLDivElement
     if (clicks%2 !== 0) {
         selectedCircle.style.backgroundColor = player1Color
+        declareTurn("Player 2")
     } else {
         selectedCircle.style.backgroundColor = player2Color
+        declareTurn("Player 1")
     }
 }
 
