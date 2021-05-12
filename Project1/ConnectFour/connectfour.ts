@@ -68,6 +68,10 @@ const declareTurn = (nextPlayer: string) => {
     }
 }
 
+const declareColor = (parent: HTMLDivElement[], indexLocation: number) => {
+        return window.getComputedStyle(parent[indexLocation].children[0]).backgroundColor
+}
+
 const checkPlayerPresence = (column: HTMLDivElement[], index: number) => {
     const circleToCheck: HTMLDivElement[] = Array.from(column[index].children) as HTMLDivElement[]
     let color = window.getComputedStyle(circleToCheck[0]).backgroundColor
@@ -80,7 +84,15 @@ const checkPlayerPresence = (column: HTMLDivElement[], index: number) => {
     }
 }
 
-const checkWin = (e) => {
+const checkVerticleWin = (column: HTMLDivElement[], div: HTMLDivElement[]) => {
+    let index: number = column.indexOf(column.find(square => square === div)) // referenced https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find as refresher 
+    if (column[index-3] !== undefined && declareColor(column, index) === declareColor(column, index - 1) && declareColor(column, index - 1) === declareColor(column, index - 2) && declareColor(column, index - 2) === declareColor(column, index - 3)) {
+        alert("win condition works")
+    }
+}
+
+// const checkWin = (e) => {
+    
     // start with a function that takes a column and a row and tells you the player (AKA bgrnd color)
 
     // check if there are spaces 4 below, 4 to the right, 4 to the left
@@ -93,7 +105,7 @@ const checkWin = (e) => {
         // OR
         // if currentColumn[index].bgrnd === currentColumn+1[index].bgrnd && currentColumn[index].bgrnd === currentColumn-1[index].bgrnd etc...
     // DIAGONAL WIN if currentColumn[index].bgrnd === currentColumn+1[index+1].bgrnd && currentColumn[index].bgrnd === currentColumn-1[index-1].bgrnd
-}
+// }
 
 // ===== EVENT LISTENERS ===== //
 const columnListener = (e) => {
@@ -103,22 +115,23 @@ const columnListener = (e) => {
     const selectedCircle = availableSpaces[0].children[0] as HTMLDivElement
     if (clicks%2 !== 0) { // it is player 1's turn is the clicks are odd
         selectedCircle.style.backgroundColor = player1Color
-        // if (checkWin(e)) {
+        // if (checkWin(currentColumn, availableSpaces[0])) {
         //     alert("Player 1 is the winner!")
         // } else {
             declareTurn("Player 2")
         // }
     } else { // it is player 2's turn if the clicks are even
         selectedCircle.style.backgroundColor = player2Color
-    //     if (checkWin(e)) {
+    //     if (checkWin(e, div)) {
     //         alert("Player 1 is the winner!")
     //     } else {
             declareTurn("Player 1")
     }
+    checkVerticleWin(currentColumn, availableSpaces[0])
 }
 
 columnDivs.forEach(column => {
     column.addEventListener("click", columnListener)
 })
 
-console.log(checkPlayerPresence(column1Squares, 0))
+// console.log(checkPlayerPresence(column1Squares, 0))
