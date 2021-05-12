@@ -47,6 +47,14 @@ const checkAvailability = (square) => {
 const declareTurn = (nextPlayer) => {
     const declareTurnH3 = document.getElementById("declare-turn");
     declareTurnH3.innerText = `${nextPlayer}, select a row and place your tile.`;
+    if (nextPlayer === "Player 1") {
+        declareTurnH3.style.color = player1Color;
+    }
+    else {
+        declareTurnH3.style.color = player2Color;
+    }
+};
+const checkWin = () => {
 };
 // ===== EVENT LISTENERS ===== //
 const columnListener = (e) => {
@@ -54,15 +62,25 @@ const columnListener = (e) => {
     const currentColumn = storeColumn(e);
     const availableSpaces = currentColumn.filter(checkAvailability);
     const selectedCircle = availableSpaces[0].children[0];
-    if (clicks % 2 !== 0) {
+    if (clicks % 2 !== 0) { // it is player 1's turn is the clicks are odd
         selectedCircle.style.backgroundColor = player1Color;
-        declareTurn("Player 2");
+        if (checkWin()) {
+            alert("Player 1 is the winner!");
+        }
+        else {
+            declareTurn("Player 2");
+        }
     }
-    else {
+    else { // it is player 2's turn if the clicks are even
         selectedCircle.style.backgroundColor = player2Color;
-        declareTurn("Player 1");
+        if (checkWin()) {
+            alert("Player 1 is the winner!");
+        }
+        else {
+            declareTurn("Player 1");
+        }
     }
+    columnDivs.forEach(column => {
+        column.addEventListener("click", columnListener);
+    });
 };
-columnDivs.forEach(column => {
-    column.addEventListener("click", columnListener);
-});

@@ -27,6 +27,11 @@ body {
     font-size: large;
 }
 
+#declare-turn {
+    text-shadow: 1px 1px white;
+    color: #F06292;
+}
+
 #player1 {
     background: #F06292;
 }
