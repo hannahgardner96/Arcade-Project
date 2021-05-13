@@ -1,4 +1,4 @@
-# ![Hannah's Arcade](https://hannahgardner96.github.io/) <br>
+# ![Hannah's Arcade](/) <br>
 <img src="homepageinterfaceimg.png" alt="homepage image" width="600" height="500" />
 
 ## Overview of Project 1 <br>
@@ -30,7 +30,7 @@ I consulted someone with experience for support adjusting the timing of display 
 
 ***
 
-## ![Jeopardy] (https://hannahgardner96.github.io/Project1/Jeopardy/) <br>
+## ![Jeopardy](https://hannahgardner96.github.io/Project1/Jeopardy/) <br>
 ### Technologies Used <br>
 ### Notable Challenges <br>
 ### Interesting Features <br>
