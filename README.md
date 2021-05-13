@@ -9,7 +9,7 @@ My goal for Project 1 is to create a game using JavaScript, TypeScript, CSS, and
 ## Simon <br>
 Simon begins with a modal that prompts a user to select from three avatar options. Upon selection, the modal disappears and the avatar appears next to their score. In the game instructions, the user is told to press "START". This triggers the background of a simon button to change as if it is lighting up. The user is alerted that it is their turn and they should imitate the sequence of lights that "Simon" demonstrated. Each time a player successfully imitates the sequence of lights, the sequence gets longer by one light. This will continue until the player incorrectly imitates the light sequence at which point an alert will pop up stating their score and that they lost. <br>
 <br>
-![Simon Interface](Simon/interfaceimg.png)
+![Simon Interface](Project1/Simon/interfaceimg.png)
 
 ### Technologies Used <br>
 This required a review of asynchronous JavaScript. I read the articles linked in [this article](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous). Additionally, I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Sketch to wireframe and Google Fonts for styling. <br>
