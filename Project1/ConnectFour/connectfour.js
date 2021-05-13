@@ -73,7 +73,12 @@ const checkPlayerPresence = (div) => {
 const checkVerticalWin = (column, div) => {
     let index = column.indexOf(column.find(square => square === div)); // referenced https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find as refresher 
     if (column[index - 3] !== undefined && declareColor(column, index) === declareColor(column, index - 1) && declareColor(column, index - 1) === declareColor(column, index - 2) && declareColor(column, index - 2) === declareColor(column, index - 3)) {
-        alert("vertical win condition works");
+        if (clicks % 2 !== 0) {
+            setTimeout(() => alert("Player 1 is the winner!"), 250);
+        }
+        else if (clicks % 2 === 0) {
+            setTimeout(() => alert("Player 2 is the winner!"), 250);
+        }
     }
 };
 const makeRowPresenceArray = () => {
@@ -91,39 +96,36 @@ const makeRowPresenceArray = () => {
     });
     return rows;
 };
-const checkHorizontalWin = () => {
-    const rows = makeRowPresenceArray();
-    rows.forEach(array => {
-        for (let i = 0; i < rows[0].length; i++) {
+const checkHorizontalWin = (arr) => {
+    arr.forEach(array => {
+        for (let i = 0; i < arr[0].length; i++) {
             if (array[i + 3] !== undefined && array[i + 2] !== undefined && array[i + 1] !== undefined && array[i] === "player1" && array[i + 1] === "player1" && array[i + 2] === "player1" && array[i + 3] === "player1") {
-                alert("Player 1 is the winner!");
+                setTimeout(() => alert("Player 1 is the winner!"), 250);
             }
             else if (array[i + 3] !== undefined && array[i + 2] !== undefined && array[i + 1] !== undefined && array[i] === "player2" && array[i + 1] === "player2" && array[i + 2] === "player2" && array[i + 3] === "player2") {
-                alert("Player 2 is the winner!");
+                setTimeout(() => alert("Player 2 is the winner!"), 250);
             }
         }
     });
 };
-// forEach column, create empty array and push to parent array
-// determine length of column and set that equal to the number of "rows" you must check
-// for index of column, checkPlayerPresence().push to array of like indices
-// create an array of rows[] with with a length equal to the number of rows
-// the inner row[] arrays should have a length equal to the number of columns
-// loop over each space in the row and return a boolean of true/false of whether the player present is player 1/2
-// if there are four consecutive trues in any array, player 1 is the winner 
-// const checkWin = (e) => {
-// start with a function that takes a column and a row and tells you the player (AKA bgrnd color)
-// check if there are spaces 4 below, 4 to the right, 4 to the left
-// if not check if there are spaces 3 below
-// let index = the first index of the current column that is available
-// VERTICLE WIN if currentColumn[index].bgrnd === currentColumn[index-1].bgrnd && currentColumn[index-1].bgrnd === currentColumn[index-2].bgrnd && currentColumn[index-2].bgrnd === currentColumn[index-3].bgrnd && currentColumn[index-3].bgrnd === currentColumn[index-4].bgrnd => win!
-// HORIZONTAL WIN if currentColumn[index].bgrnd === currentColumn+1[index].bgrnd && currentColumn+1[index].bgrnd === currentColumn+2[index].bgrnd etc...
-// OR
-// if currentColumn[index].bgrnd === currentColumn-1[index].bgrnd && currentColumn-1[index].bgrnd === currentColumn-2[index].bgrnd etc...
-// OR
-// if currentColumn[index].bgrnd === currentColumn+1[index].bgrnd && currentColumn[index].bgrnd === currentColumn-1[index].bgrnd etc...
-// DIAGONAL WIN if currentColumn[index].bgrnd === currentColumn+1[index+1].bgrnd && currentColumn[index].bgrnd === currentColumn-1[index-1].bgrnd
-// }
+const checkDiagonalWin = (arr) => {
+    arr.forEach(array => {
+        for (let i = arr[0].length; i >= 0; i--) {
+            if (arr[i + 3] && arr[i + 2] && arr[i + 1] && arr[i + 3][i + 3] !== undefined && arr[i + 2][i + 2] !== undefined && arr[i + 1][i + 1] !== undefined && arr[i + 3][i + 3] === "player1" && arr[i + 2][i + 2] === "player1" && arr[i + 1][i + 1] === "player1" && array[i] === "player1") {
+                setTimeout(() => alert("Player 1 is the winner!"), 250);
+            }
+            else if (arr[i + 3] && arr[i + 2] && arr[i + 1] && arr[i + 3][i + 3] !== undefined && arr[i + 2][i + 2] !== undefined && arr[i + 1][i + 1] !== undefined && arr[i + 3][i + 3] === "player2" && arr[i + 2][i + 2] === "player2" && arr[i + 1][i + 1] === "player2" && array[i] === "player2") {
+                setTimeout(() => alert("Player 2 is the winner!"), 250);
+            }
+        }
+    });
+};
+const checkWin = (column, div) => {
+    checkVerticalWin(column, div);
+    const rows = makeRowPresenceArray();
+    checkHorizontalWin(rows);
+    checkDiagonalWin(rows);
+};
 // ===== EVENT LISTENERS ===== //
 const columnListener = (e) => {
     increaseClicks();
@@ -132,23 +134,15 @@ const columnListener = (e) => {
     const selectedCircle = availableSpaces[0].children[0];
     if (clicks % 2 !== 0) { // it is player 1's turn is the clicks are odd
         selectedCircle.style.backgroundColor = player1Color;
-        // if (checkWin(currentColumn, availableSpaces[0])) {
-        //     alert("Player 1 is the winner!")
-        // } else {
+        checkWin(currentColumn, availableSpaces[0]);
         declareTurn("Player 2");
-        // }
     }
     else { // it is player 2's turn if the clicks are even
         selectedCircle.style.backgroundColor = player2Color;
-        //     if (checkWin(e, div)) {
-        //         alert("Player 1 is the winner!")
-        //     } else {
+        checkWin(currentColumn, availableSpaces[0]);
         declareTurn("Player 1");
     }
-    checkVerticalWin(currentColumn, availableSpaces[0]);
-    checkHorizontalWin();
 };
 columnDivs.forEach(column => {
     column.addEventListener("click", columnListener);
 });
-// console.log(checkPlayerPresence(column1Squares, 0))
