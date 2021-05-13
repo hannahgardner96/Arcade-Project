@@ -25,13 +25,6 @@ const player2Color = "rgb(77, 208, 225)";
 let clicks = 0;
 // * column arrays * //
 const columnDivs = Array.from(document.querySelectorAll(".column"));
-const column1Squares = Array.from(document.getElementById("column1").children);
-const column2Squares = Array.from(document.getElementById("column2").children);
-const column3Squares = Array.from(document.getElementById("column3").children);
-const column4Squares = Array.from(document.getElementById("column4").children);
-const column5Squares = Array.from(document.getElementById("column5").children);
-const column6Squares = Array.from(document.getElementById("column6").children);
-const column7Squares = Array.from(document.getElementById("column7").children);
 // ===== FUNCTIONS ===== //
 const increaseClicks = () => {
     clicks = clicks + 1;

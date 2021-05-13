@@ -42,8 +42,7 @@ In order to determine if all the LI displays had been changed to "inline" I need
 ***
 
 ## [Jeopardy](https://hannahgardner96.github.io/Project1/Jeopardy/) <br>
-
-<br>
+The player decides when and how to start this simplified approach to Jeopardy. With the option to select from five categories at five difficulties, the player can begin with a challenge or just dip their toes in the water. By clicking on a tile, the player flips it over to reveal a question. The "focus" immediately shifts to the input bar, visually prompting the player to type an answer. Upon submit, their response is converted to lowercase letters for easy comparison to the correct answer which is stored in a separate div. Each tile is composed of a "card front", "card back", "answer", and "completed" div. When every "completed" div's style is set to "inline-block", the player is prompted to answer the final question. After answering, if their score is above zero, they win. If their score is below zero, they lose. <br>
 <br>
 ![Jeopardy Interface](Project1/Jeopardy/interfaceimg.png)
 
@@ -51,7 +50,10 @@ In order to determine if all the LI displays had been changed to "inline" I need
 I used asynchronous JS for the timing of revealin the final jeopardy question. Otherwise, I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
 
 ### Notable Challenges <br>
+When adding the event listener to the final question, it alerted the player to their score and whether they won prior to actually running the runFinalQuestion() function. I was able to utilize the knowledge I gained from Simon Says to integrate asynchronous JS into my code. I consulted someone with experience for support on syntax and turned the clicking of the submit button into a promise to force the remainder of the function to await its completion.
+
 ### Interesting Features <br>
+After two games in which the addition and removal of event listeners became necessary, I decided to take a different approach that enabled my storing of all event listeners in one section. By creating functions that added and removed event listeners to different DOM element, I could dilineate the listeners I planned to use throughout the program in one place and then call them dynamically. See the final section (beginning on line 129 of my [TS file](https://github.com/hannahgardner96/hannahgardner96.github.io/blob/master/Project1/Jeopardy/jeopardy.ts)) to review event listener functions.
 
 ***
 

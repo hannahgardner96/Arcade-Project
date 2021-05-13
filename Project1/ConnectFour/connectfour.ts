@@ -28,21 +28,6 @@ let clicks = 0
 // * column arrays * //
 const columnDivs: HTMLDivElement[] = Array.from(document.querySelectorAll(".column")) as HTMLDivElement[]
 
-const column1Squares: HTMLDivElement[] = Array.from(document.getElementById("column1").children) as HTMLDivElement[]
-
-const column2Squares: HTMLDivElement[] = Array.from(document.getElementById("column2").children) as HTMLDivElement[]
-
-const column3Squares: HTMLDivElement[] = Array.from(document.getElementById("column3").children) as HTMLDivElement[]
-
-const column4Squares: HTMLDivElement[] = Array.from(document.getElementById("column4").children) as HTMLDivElement[]
-
-const column5Squares: HTMLDivElement[] = Array.from(document.getElementById("column5").children) as HTMLDivElement[]
-
-const column6Squares: HTMLDivElement[] = Array.from(document.getElementById("column6").children) as HTMLDivElement[]
-
-const column7Squares: HTMLDivElement[] = Array.from(document.getElementById("column7").children) as HTMLDivElement[]
-
-
 // ===== FUNCTIONS ===== //
 const increaseClicks = () => {
     clicks = clicks + 1
