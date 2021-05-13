@@ -1,5 +1,4 @@
-<p align="center">
- # Hannah's Arcade <br>
+# Hannah's Arcade <br>
 <img src="homepageinterfaceimg.png" alt="homepage image" width="600" height="500" />
 
 ## Overview of Project 1 <br>
@@ -44,4 +43,3 @@ I consulted someone with experience for support adjusting the timing of display 
 ### Interesting Features <br>
 
 ***
-</p>
