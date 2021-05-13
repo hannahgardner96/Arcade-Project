@@ -60,7 +60,7 @@ After two games in which the addition and removal of event listeners became nece
 ## [Connect Four](https://hannahgardner96.github.io/Project1/ConnectFour/) <br>
 The header of the page immediately prompts player 1 to select a column and place a tile. The font is the color of the tile that will be placed. After clicking a column, a tile appears at the bottom. The text at the top of the page immediately changes to declare player 2's turn. Following the same steps, it shifts back to player 1's turn. Once one player has four tiles in a row (vertically, horizontally, or diagonally), an alert pops up to notify the player that they won.<br>
 <br>
-![Connect Four Interface](Project1/ConnectFour/interfaceimg.png)
+<img src="Project1/ConnectFour/interfaceimg.png" alt="connect four image" width="400" height="300" />
 
 ### Technologies Used <br>
 I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
