@@ -45,7 +45,7 @@ const checkAvailability = (square: HTMLDivElement) => { // checks the background
 
 const declareTurn = (nextPlayer: string) => {
     const declareTurnH3 = document.getElementById("declare-turn")
-    declareTurnH3.innerText = `${nextPlayer}, select a row and place your tile.`
+    declareTurnH3.innerText = `${nextPlayer}, select a column and place your tile.`
     if (nextPlayer === "Player 1") {
         declareTurnH3.style.color = player1Color
     } else {

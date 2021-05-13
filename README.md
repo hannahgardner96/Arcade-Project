@@ -47,19 +47,18 @@ The player decides when and how to start this simplified approach to Jeopardy. W
 ![Jeopardy Interface](Project1/Jeopardy/interfaceimg.png)
 
 ### Technologies Used <br>
-I used asynchronous JS for the timing of revealin the final jeopardy question. Otherwise, I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
+I used asynchronous JS for the timing of revealing the final jeopardy question. Otherwise, I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
 
 ### Notable Challenges <br>
 When adding the event listener to the final question, it alerted the player to their score and whether they won prior to actually running the runFinalQuestion() function. I was able to utilize the knowledge I gained from Simon Says to integrate asynchronous JS into my code. I consulted someone with experience for support on syntax and turned the clicking of the submit button into a promise to force the remainder of the function to await its completion.
 
 ### Interesting Features <br>
-After two games in which the addition and removal of event listeners became necessary, I decided to take a different approach that enabled my storing of all event listeners in one section. By creating functions that added and removed event listeners to different DOM element, I could dilineate the listeners I planned to use throughout the program in one place and then call them dynamically. See the final section (beginning on line 129 of my [TS file](https://github.com/hannahgardner96/hannahgardner96.github.io/blob/master/Project1/Jeopardy/jeopardy.ts)) to review event listener functions.
+After two games in which the addition and removal of event listeners became necessary, I decided to take a different approach that enabled my storing all event listeners in one section. By creating functions that added and removed event listeners to and from different DOM elements, I could dilineate the listeners I planned to use throughout the program in one place and then call them dynamically. See the final section (beginning on line 129 of my [TS file](https://github.com/hannahgardner96/hannahgardner96.github.io/blob/master/Project1/Jeopardy/jeopardy.ts)) to review event listener functions.
 
 ***
 
 ## [Connect Four](https://hannahgardner96.github.io/Project1/ConnectFour/) <br>
-
-<br>
+The header of the page immediately prompts player 1 to select a column and place a tile. The font is the color of the tile that will be placed. After clicking a column, a tile appears at the bottom. The text at the top of the page immediately changes to declare player 2's turn. Following the same steps, it shifts back to player 1's turn. Once one player has four tiles in a row (vertically, horizontally, or diagonally), an alert pops up to notify the player that they won.<br>
 <br>
 ![Connect Four Interface](Project1/ConnectFour/interfaceimg.png)
 
@@ -67,6 +66,8 @@ After two games in which the addition and removal of event listeners became nece
 I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
 
 ### Notable Challenges <br>
-### Interesting Features <br>
+When I reached the win condition's planning, I was not sure where to begin. After some deliberation, I wrote a vertical win scenario that checked if spaces existed four spaces below the current space and if they were all the same color. However, a horizontal and diagonal win still eluded me. Upon consultation of someone with experience, I began thinking about how I could structure a grid (an array of arrays) to determine win scenarios. Using a combination of different for loops, I examined the presence or absence of player tiles at different locations on the board, checking if four in a row contained either player 1's tile or player 2's tile.
 
+### Interesting Features <br>
+All colors used in JS are declared in the rgb() format. Using hex codes produced an error message. After further examining why my conditionals were failing, I realized JS was attempting to compare the strings of a hex code and rgb() value for the same color. Changing all my colors to rgb() values immediately solved the problem.
 ***
