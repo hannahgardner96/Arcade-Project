@@ -2,7 +2,7 @@
 <img src="homepageinterfaceimg.png" alt="homepage image" width="600" height="500" />
 
 ## Overview of Project 1 <br>
-Project 1 Goal: create a game using JavaScript, TypeScript, CSS, and HTML that integrates DOM maniuplation through JS, reasponds to event listeners, and allows a user to play at least one round of a game. <br>
+Project 1 Goal: create a game using JavaScript, TypeScript, CSS, and HTML that integrates DOM maniuplation through JS, responds to event listeners, and allows a user to play at least one round of a game. <br>
 <br>
 I began with a virtual version of Simon Says which required some basic knowledge of asynchronous JavaScript. After finishing this, I created a hiden word guessing game, Connect Four, and Jeopardy. I housed my games on an arcade homepage to enable seamless navigation. Below, I will elaborate on the technologies used, notable challenges, and interesting features. <br>
 

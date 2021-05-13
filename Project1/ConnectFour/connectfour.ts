@@ -72,8 +72,8 @@ const declareColor = (parent: HTMLDivElement[], indexLocation: number) => {
         return window.getComputedStyle(parent[indexLocation].children[0]).backgroundColor
 }
 
-const checkPlayerPresence = (column: HTMLDivElement[], index: number) => {
-    const circleToCheck: HTMLDivElement[] = Array.from(column[index].children) as HTMLDivElement[]
+const checkPlayerPresence = (div: HTMLDivElement) => {
+    const circleToCheck: HTMLDivElement[] = Array.from(div.children) as HTMLDivElement[]
     let color = window.getComputedStyle(circleToCheck[0]).backgroundColor
     if (color === player1Color) {
         return "player1"
@@ -90,6 +90,44 @@ const checkVerticalWin = (column: HTMLDivElement[], div: HTMLDivElement[]) => {
         alert("vertical win condition works")
     }
 }
+
+const makeRowPresenceArray = () => {
+    let rows = [] // parent array to store child arrays that represent each row
+    columnDivs.forEach(() => { // adds empty array that will represent a row of spaces at equal indices
+        rows.push([])
+    })
+    let rowLength = Array.from(columnDivs[0].children).length // stores the length of a row
+    columnDivs.forEach(column => { 
+        let squares = Array.from(column.children) as HTMLDivElement[] // for each column, creates an array of children squares
+        for (let i = 0; i < rowLength; i++) { // takes the square at each index, checks who is there, and adds that return to different indexed rows
+            let presence = checkPlayerPresence(squares[i])    
+            rows[i].push(presence)
+        }
+    })
+    return rows
+}
+
+const checkHorizontalWin = () => {
+    const rows = makeRowPresenceArray()
+    rows.forEach(array => {
+        for (let i = 0; i < rows[0].length; i++) {
+            if (array[i+3] !== undefined && array[i+2] !== undefined && array[i+1] !== undefined && array[i] === "player1" && array[i+1] === "player1" && array[i+2] === "player1" && array[i+3] === "player1") {
+                alert("Player 1 is the winner!")
+            } else if (array[i+3] !== undefined && array[i+2] !== undefined && array[i+1] !== undefined && array[i] === "player2" && array[i+1] === "player2" && array[i+2] === "player2" && array[i+3] === "player2"){
+                alert("Player 2 is the winner!")
+            }
+        }
+    })
+}
+
+// forEach column, create empty array and push to parent array
+// determine length of column and set that equal to the number of "rows" you must check
+    // for index of column, checkPlayerPresence().push to array of like indices
+// create an array of rows[] with with a length equal to the number of rows
+    // the inner row[] arrays should have a length equal to the number of columns
+    // loop over each space in the row and return a boolean of true/false of whether the player present is player 1/2
+    // if there are four consecutive trues in any array, player 1 is the winner 
+
 
 // const checkWin = (e) => {
     
@@ -128,6 +166,7 @@ const columnListener = (e) => {
             declareTurn("Player 1")
     }
     checkVerticalWin(currentColumn, availableSpaces[0])
+    checkHorizontalWin()
 }
 
 columnDivs.forEach(column => {
