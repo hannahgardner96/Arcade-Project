@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+html {
+    background: #FDD835;
+    padding: 5%;
+}
+
+body {
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    color: white;
+    background: #FFEB3B;
+    border-radius: 25px;
+    border: 4px solid white;
+    box-shadow: 2px 2px 4px white;
+}
+
+a {
+    color: white;
+}
+
+h1 {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+nav {
+    background: #FFF176;
+    border: 4px solid white;
+    width: 99.5%;
+    margin: 0;
+    box-shadow: 2px 2px 4px white;
+}
+a {
+
+    color: #FDD835;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+}
+
+li {
+    display: inline-flex;
+    padding: 2%;
+    margin: 2%;
+    background-color: white;
+    box-shadow: 2px 2px 4px white;
+    border: 1px solid #FFEB3B;
+}
+
+.container {
+    display:inline-flex;
+    align-content: center;
+}
+
+img {
+    object-fit: cover;
+    width: 12em;
+    height: 12em;
+    border: 4px solid white;
+    box-shadow: 2px 2px 4px white;
+    border-radius: 25px;
+}
+
+.game-links {
+    background: #FFF9C4;
+    border-radius: 25px;
+
+    border: 4px solid white;
+    margin: 1em;
+    box-shadow: 2px 2px 4px white;
+    height: 19em;
+    width: 19em;
+}
+.game-img {
+    color: #FDD835;
+    text-shadow: 1px 1px white;
+}
+
+@media (max-width: 800px) {
+    .container {
+        display: inline-flex;
+        flex-direction: column;
+    }
+}
