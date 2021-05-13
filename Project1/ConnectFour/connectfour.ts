@@ -88,7 +88,7 @@ const checkVerticalWin = (column: HTMLDivElement[], div: HTMLDivElement[]) => {
     let index: number = column.indexOf(column.find(square => square === div)) // referenced https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find as refresher 
     if (column[index-3] !== undefined && declareColor(column, index) === declareColor(column, index - 1) && declareColor(column, index - 1) === declareColor(column, index - 2) && declareColor(column, index - 2) === declareColor(column, index - 3)) {
         if (clicks%2 !== 0){
-            setTimeout(() => alert("Player 1 is the winner!"), 250)
+            setTimeout(() => alert("Player 1 is the winner!"), 250) // by adding a timeout here, the display of the tile changes before the alert pops up
         } else if (clicks%2 === 0){
             setTimeout(() => alert("Player 2 is the winner!"), 250)
         }
@@ -112,8 +112,8 @@ const makeRowPresenceArray = () => { // consulted someone with experience who su
 }
 
 const checkHorizontalWin = (arr: any[]) => {
-    arr.forEach(array => {
-        for (let i = 0; i < arr[0].length; i++) {
+    arr.forEach(array => { // goes through each row in the array of arrays
+        for (let i = 0; i < arr[0].length; i++) { // for each row, this checks if, at a certain index, spaces exist three additional indices further. If they do, it checks that their values are either player1 or player2
             if (array[i+3] !== undefined && array[i+2] !== undefined && array[i+1] !== undefined && array[i] === "player1" && array[i+1] === "player1" && array[i+2] === "player1" && array[i+3] === "player1") {
                 setTimeout(() => alert("Player 1 is the winner!"), 250)
             } else if (array[i+3] !== undefined && array[i+2] !== undefined && array[i+1] !== undefined && array[i] === "player2" && array[i+1] === "player2" && array[i+2] === "player2" && array[i+3] === "player2"){
@@ -124,8 +124,8 @@ const checkHorizontalWin = (arr: any[]) => {
 }
 
 const checkDiagonalWin = (arr: any[]) => {
-    arr.forEach(array => {
-        for (let i = arr[0].length; i >= 0; i--) {
+    arr.forEach(array => { // goes through each row of an array 
+        for (let i = arr[0].length; i >= 0; i--) { // for each row, this checks is, at a certain index, spaces exist three additional rows up and three additional columns over, if they do, it checks if each value moving up on a diagonal is either player1 or player2
             if (arr[i+3] && arr[i+2] && arr[i+1] && arr[i+3][i+3] !== undefined && arr[i+2][i+2] !== undefined && arr[i+1][i+1] !== undefined && arr[i+3][i+3] === "player1" && arr[i+2][i+2] === "player1" && arr[i+1][i+1] === "player1" && array[i] === "player1") {
                 setTimeout(() => alert("Player 1 is the winner!"), 250)
             } else if (arr[i+3] && arr[i+2] && arr[i+1] && arr[i+3][i+3] !== undefined && arr[i+2][i+2] !== undefined && arr[i+1][i+1] !== undefined && arr[i+3][i+3] === "player2" && arr[i+2][i+2] === "player2" && arr[i+1][i+1] === "player2" && array[i] === "player2") {
