@@ -26,21 +26,44 @@ I consulted someone with experience for support adjusting the timing of display 
 ***
 
 ## [Snowman: Guess the Hidden Word](https://hannahgardner96.github.io/Project1/Snowman/) <br>
+When the player presses start, Snowman begins! A secret word is randomly selected from an array. It is appended to a header element on the page with the display set to none. Using this word, I created an array of individual letters that could be compared to the buttons pressed by the player. If the player presses the button for a letter contained in the array, the display of the LI containing that letter is changed to inline. If the letter is not contained in the array, incorrect guesses increases by one. If incorrect guesses reaches six, the player loses. If the played changes the display of every LI to inline, they win.<br>
+<br>
+![Snowman Interface](Project1/Snowman/interfaceimg.png)
+
 ### Technologies Used <br>
+I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Sketch to wireframe and Google Fonts for styling.<br>
+
 ### Notable Challenges <br>
+In order to limit the continued populatin of the UL with hidden words, I had to dynamically remove and add event listeners. Inititally, this seemed unfeasible. However, after some research, I found it was easiest to remove event listeners in the form of ".addEventListener("click")" that called a sinle function. Originally, my event listeners were in the ".onclick" format and called multiple functions. By creating a single event listener function to call and adjusting the format, I could easily add and remove the listeners.<br>
+
 ### Interesting Features <br>
+In order to determine if all the LI displays had been changed to "inline" I needed an array of styles. Using the "document.getElement(s)ById/Class/Etc.().style.display gave me an error message. After consulting someone with experience, I used "window.getComputedStyle().display, a tool new to me. I found this tool helpful in subsequent games throughout the project.<br>
 
 ***
 
 ## [Jeopardy](https://hannahgardner96.github.io/Project1/Jeopardy/) <br>
+
+<br>
+<br>
+![Jeaopardy Interface](Project1/Jeopardy/interfaceimg.png)
+
 ### Technologies Used <br>
+I used asynchronous JS for the timing of revealin the final jeopardy question. Otherwise, I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
+
 ### Notable Challenges <br>
 ### Interesting Features <br>
 
 ***
 
 ## [Connect Four](https://hannahgardner96.github.io/Project1/ConnectFour/) <br>
+
+<br>
+<br>
+![Connect Four Interface](Project1/ConnectFour/interfaceimg.png)
+
 ### Technologies Used <br>
+I implemented vanilla JavaScript, TypeScript, HTML, and CSS.  I used Google Fonts for styling.
+
 ### Notable Challenges <br>
 ### Interesting Features <br>
 
