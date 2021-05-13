@@ -127,7 +127,7 @@ p {
 
 /* ===== STYLING OF SIMON INTERFACE ===== */
 #simon-interface {
-    width: 98%;
+    width: 95%;
     height: 17em;
     background-color: #AFB42B ;
     display: inline-flex;
@@ -231,7 +231,7 @@ h2 {
     justify-content: center;
     align-items: baseline;
     border-radius: 25px;
-    border: solid 5px #D4E157;
+    border: solid 5px #AFB42B;
     box-shadow: 2px 2px 4px white;
 }
 

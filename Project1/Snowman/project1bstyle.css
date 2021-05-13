@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 
 html {
-    background: #9C27B0;
+    background: #283593;
     padding: 5%;
     display: flex;
     justify-content: center;
@@ -14,32 +14,35 @@ body {
     vertical-align: middle;
     font-family: 'Roboto Mono', monospace;
     font-weight: bolder;
-    text-shadow: 1px 1px white;
-    color: #2196F3;
+    text-shadow: 1px 1px #E8EAF6 ;
+    color: #C5CAE9;
 }
 
 button {
     font-family: 'Roboto Mono', monospace;
-    background: #3F51B5;
+    background: #5C6BC0;
     color: white;
-    border: solid 4px #03A9F4;
+    border: solid 2px white;
     margin: 0.3em;
     cursor: pointer;
+    box-shadow: 2px 2px 4px #E8EAF6;
 }
 
 #snowman-interface {
     display: inline-flex;
-    background: #673AB7;
+    background: #3949AB;
     border-radius: 25px;
     border: solid 4px white;
+    box-shadow: 2px 2px 4px #E8EAF6;
 }
 
 /* ===== STYLING OF INTRO ===== */
 #intro {
-    background: #673AB7;
+    background: #3949AB;
     border-radius: 25px;
     border: solid 4px white;
     margin-bottom: 2em;
+    box-shadow: 2px 2px 4px #E8EAF6;
 }
 
 h1 {
