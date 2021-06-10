@@ -60,7 +60,10 @@
 // DONE after a player clicks a button, it alerts them immediately whether they were correct/incorrect rather than waiting until after their light flashes.
 // DONE multiple alerts popping up as start button clicked multiple times
 // DONE not able to run compareSequences() for second round
-
+/// <reference path= "../../sweetalert2.d.ts" />
+import type SwalDeclaration from "sweetalert2"
+declare const Swal: typeof SwalDeclaration
+// Swal.fire("Hello world")
 // ===== INTERFACES ===== //
 interface SimonButton {
     id: string,
@@ -279,5 +282,3 @@ avatarOptions.forEach(button => {
         
     }
 })
-
-// swal("hello world")
