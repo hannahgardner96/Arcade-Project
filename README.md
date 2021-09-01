@@ -1,4 +1,4 @@
-# [Hannah's Arcade](https://hannahgardner96.github.io/) <br>
+# [Hannah's Arcade](https://hannahgardner96.github.io/Arcade-Project/) <br>
 <img src="homepageinterfaceimg.png" alt="homepage image" width="600" height="500" />
 
 ## Overview of Project 1 <br>
